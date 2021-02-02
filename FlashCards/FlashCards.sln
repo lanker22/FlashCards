@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashCards", "FlashCards.csproj", "{30A3C5F2-7855-49C7-8531-F2CD756C97B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src", "src\src.csproj", "{9CD1D2DD-012F-415E-B146-A4BD2761AA9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{30A3C5F2-7855-49C7-8531-F2CD756C97B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{30A3C5F2-7855-49C7-8531-F2CD756C97B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{30A3C5F2-7855-49C7-8531-F2CD756C97B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{30A3C5F2-7855-49C7-8531-F2CD756C97B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CD1D2DD-012F-415E-B146-A4BD2761AA9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CD1D2DD-012F-415E-B146-A4BD2761AA9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CD1D2DD-012F-415E-B146-A4BD2761AA9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CD1D2DD-012F-415E-B146-A4BD2761AA9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {960F46F8-F875-45A7-B99E-7087CDAEEF2B}
+		SolutionGuid = {1207C64B-1B92-4FF8-BA4F-575FC4D3A38A}
 	EndGlobalSection
 EndGlobal

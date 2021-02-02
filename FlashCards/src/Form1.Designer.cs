@@ -1,5 +1,5 @@
 ﻿
-namespace FlashCards
+namespace src
 {
     partial class Form1
     {
