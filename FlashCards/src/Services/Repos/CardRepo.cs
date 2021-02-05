@@ -10,16 +10,15 @@ namespace src.Services.Repos
     /// <summary>
     ///     Provides database connection and returns data to Card Service layer.
     /// </summary>
-    public class CardRepo
+    public class CardRepo : ICardRepo
     {
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["FlashCardsDatabase"].ConnectionString;
 
-        // TODO: CONFIGURE DI FOR THIS
-        private readonly RepoHelper _helper;
+        private readonly IRepoHelper _helper;
 
-        public CardRepo()
+        public CardRepo(IRepoHelper helper)
         {
-            _helper = new RepoHelper();
+            _helper = helper;
         }
 
         /// <summary>
@@ -35,9 +34,9 @@ namespace src.Services.Repos
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                foreach(var card in cards)
+                foreach (var card in cards)
                 {
-                    using(var command = new SqlCommand(queryString, connection))
+                    using (var command = new SqlCommand(queryString, connection))
                     {
                         {
                             command.Parameters.AddWithValue("@question", card.Question);

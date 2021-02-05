@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Data.SqlServerCe;
 using System.Text;
 
 namespace src.Services.Repos
@@ -10,13 +9,13 @@ namespace src.Services.Repos
     /// <summary>
     ///     Provides some helper functions to assist the repository.
     /// </summary>
-    class RepoHelper
+    public class RepoHelper : IRepoHelper
     {
         /// <param name="reader">A SqlCeDataReader instance</param>
         /// <returns>A list of all the current Decks within the reader</returns>
         public List<Deck> GenerateListOfAllDecksFromReader(SqlDataReader reader)
         {
-            using(reader)
+            using (reader)
             {
                 var decks = new List<Deck>();
 
@@ -80,13 +79,13 @@ namespace src.Services.Repos
                 return deck;
             }
         }
-        
+
         /// <summary>
         ///     Creates a new Card object from the current database reader row.
         /// </summary>
         /// <param name="reader">The current database reader row</param>
         /// <returns>A single Card object</returns>
-        protected Card GenerateCardFromReader(SqlDataReader reader)
+        public Card GenerateCardFromReader(SqlDataReader reader)
         {
             return new Card
             {
@@ -100,7 +99,7 @@ namespace src.Services.Repos
         /// </summary>
         /// <param name="reader">The current database reader to populatea the new Deck with.</param>
         /// <returns>A single Card object</returns>
-        protected Deck GenerateEmptyDeckFromReader(SqlDataReader reader)
+        public Deck GenerateEmptyDeckFromReader(SqlDataReader reader)
         {
             return new Deck
             {
