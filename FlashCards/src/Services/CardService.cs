@@ -24,16 +24,7 @@ namespace src.Services
         /// <param name="deckId">Deck to put the cards into</param>
         public void AddNewCards(List<Card> cards, int deckId)
         {
-            try
-            {
-                _cardrepo.AddCardsToDatabase(cards, deckId);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-                throw ex;
-            }
+            _cardrepo.AddCardsToDatabase(cards, deckId);
         }
     }
 }

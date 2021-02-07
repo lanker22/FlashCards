@@ -10,12 +10,14 @@ namespace src.Presenters
     {
         private IAddDeckView _addDeckView;
         private readonly IDeckService _deckService;
+        private readonly IEventAggregator _eventAggregator;
         public AddDeckPresenter(IAddDeckView addDeckView,
-                                IDeckService deckService)
+                                IDeckService deckService,
+                                IEventAggregator eventAggregator)
         {
             _addDeckView = addDeckView;
             _deckService = deckService;
-            _addDeckView.DeckAddedClicked += _addDeckView_DeckAddedClicked;
+            _eventAggregator = eventAggregator;
         }
 
         private void _addDeckView_DeckAddedClicked(object sender, EventArgs e)

@@ -2,6 +2,7 @@
 using src.Services.Repos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace src.Services
@@ -24,16 +25,7 @@ namespace src.Services
         /// <returns>A List<Deck></returns>
         public List<Deck> GetAllDecks()
         {
-            try
-            {
-                return _deckRepo.GetAllDecksFromDatabase();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-                throw ex;
-            }
+            return _deckRepo.GetAllDecksFromDatabase();
         }
 
         /// <summary>
@@ -43,16 +35,7 @@ namespace src.Services
         /// <returns>A single deck</returns>
         public Deck GetDeck(int deckId)
         {
-            try
-            {
-                return _deckRepo.GetDeck(deckId);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-                throw ex;
-            }
+            return _deckRepo.GetDeck(deckId);
         }
 
         /// <summary>
@@ -61,17 +44,28 @@ namespace src.Services
         /// <param name="name">The name of the new deck to add.</param>
         public void AddNewDeck(string name)
         {
-            try
-            {
-                _deckRepo.AddNewDeckToDatabase(name);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-                throw ex;
-            }
+            _deckRepo.AddNewDeckToDatabase(name);
         }
 
+        /// <summary>
+        ///     Remove a single deck from the database.
+        /// </summary>
+        /// <param name="deckId">Primary key of the deck to remove</param>
+        public void RemoveDeck(int deckId)
+        {
+            _deckRepo.DeleteDeckFromDatabase(deckId);
+        }
+
+        /// <summary>
+        ///     Randomize the order of the cards in a given Deck.
+        /// </summary>
+        /// <param name="deck">The Deck to shuffle</param>
+        /// <returns>A shuffled Deck</returns>
+        public Deck ShuffleDeck(Deck deck)
+        {
+            var rnd = new Random();
+            deck.Cards = deck.Cards.OrderBy(x => rnd.Next()).ToList();
+            return deck;
+        }
     }
 }

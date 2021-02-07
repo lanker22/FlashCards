@@ -7,7 +7,7 @@ namespace src.Views
 {
     public interface IHomePageView
     {
-        void SetDecks(IEnumerable<Deck> decks);
+        IEnumerable<IDeckView> Decks { get; set; } 
         
         event EventHandler AddDeckClicked;
         

@@ -11,14 +11,17 @@ namespace src.Presenters
         private IFlashCardGameView _flashCardGameView;
         private readonly IDeckService _deckService;
         private readonly ICardService _cardService;
+        private IEventAggregator _eventAggregator;
 
         public FlashCardGamePresenter(IFlashCardGameView flashCardGameView,
                                       IDeckService deckService,
-                                      ICardService cardService)
+                                      ICardService cardService,
+                                      IEventAggregator eventAggregator)
         {
             _flashCardGameView = flashCardGameView;
             _deckService = deckService;
             _cardService = cardService;
+            _eventAggregator = eventAggregator;
         }
     }
 }

@@ -28,7 +28,7 @@ namespace src
                     services.AddTransient<ICardRepo, CardRepo>();
                     services.AddTransient<IRepoHelper, RepoHelper>();
                     services.AddTransient<ICardService, CardService>();
-                    services.AddTransient<IDeckService, DeckService>();
+                    services.AddTransient<IEventAggregator, EventAggregator>();
                     //services.AddTransient<IHomePageView, HomePageView>();
                     //services.AddTransient<IAddDeckView, AddDeckView>();
                     //services.AddTransient<IFlashCardGameView, FlashCardGameView>();
