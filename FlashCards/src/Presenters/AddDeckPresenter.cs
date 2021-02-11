@@ -3,9 +3,13 @@ using src.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using src.Models;
 
 namespace src.Presenters
 {
+    /// <summary>
+    ///     Provides values to and executes commands from the AddDeck view.
+    /// </summary>
     class AddDeckPresenter
     {
         private IAddDeckView _addDeckView;
@@ -22,7 +26,19 @@ namespace src.Presenters
 
         private void _addDeckView_DeckAddedClicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var snd = sender as IAddDeckView;
+            try
+            {
+                _deckService.AddNewDeck(snd.Name);
+                // TODO : Add "deckadded" message event to event aggregator.
+                _addDeckView.Name = "";
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                throw ex;
+            }
         }
     }
 }

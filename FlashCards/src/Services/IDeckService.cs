@@ -8,5 +8,7 @@ namespace src.Services
         void AddNewDeck(string name);
         List<Deck> GetAllDecks();
         Deck GetDeck(int deckId);
+        void RemoveDeck(int deckId);
+        Deck ShuffleDeck(Deck deck);
     }
 }

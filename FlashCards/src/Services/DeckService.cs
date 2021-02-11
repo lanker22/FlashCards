@@ -23,7 +23,7 @@ namespace src.Services
         ///     Retrieve all the current decks.
         /// </summary>
         /// <returns>A List<Deck></returns>
-        public List<Deck> GetAllDecks()
+        public List<Models.Deck> GetAllDecks()
         {
             return _deckRepo.GetAllDecksFromDatabase();
         }
@@ -33,7 +33,7 @@ namespace src.Services
         /// </summary>
         /// <param name="deckId">Primary key of the deck to retrieve</param>
         /// <returns>A single deck</returns>
-        public Deck GetDeck(int deckId)
+        public Models.Deck GetDeck(int deckId)
         {
             return _deckRepo.GetDeck(deckId);
         }

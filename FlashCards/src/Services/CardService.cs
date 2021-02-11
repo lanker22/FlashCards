@@ -26,5 +26,15 @@ namespace src.Services
         {
             _cardrepo.AddCardsToDatabase(cards, deckId);
         }
+
+        /// <summary>
+        ///     Add a single Card to the specified Deck.
+        /// </summary>
+        /// <param name="card">The Card to add to the Deck.</param>
+        /// <param name="deckId">The Deck to add the Card to.</param>
+        public void AddSingleCardToDeck(Card card, int deckId)
+        {
+            _cardrepo.AddSingleCardToDatabase(card, deckId);
+        }
     }
 }

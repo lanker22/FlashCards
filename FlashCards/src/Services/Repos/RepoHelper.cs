@@ -13,11 +13,11 @@ namespace src.Services.Repos
     {
         /// <param name="reader">A SqlCeDataReader instance</param>
         /// <returns>A list of all the current Decks within the reader</returns>
-        public List<Deck> GenerateListOfAllDecksFromReader(SqlDataReader reader)
+        public List<Models.Deck> GenerateListOfAllDecksFromReader(SqlDataReader reader)
         {
             using (reader)
             {
-                var decks = new List<Deck>();
+                var decks = new List<Models.Deck>();
 
                 if (reader.Read())
                 {
@@ -55,11 +55,11 @@ namespace src.Services.Repos
         /// </summary>
         /// <param name="reader">A SqlCeDataReader instance</param>
         /// <returns>A Deck object generated with data from reader</returns>
-        public Deck GeneratePopulatedDeckFromReader(SqlDataReader reader)
+        public Models.Deck GeneratePopulatedDeckFromReader(SqlDataReader reader)
         {
             using (reader)
             {
-                var deck = new Deck
+                var deck = new Models.Deck
                 {
                     Cards = new List<Card>(),
                 };
@@ -99,9 +99,9 @@ namespace src.Services.Repos
         /// </summary>
         /// <param name="reader">The current database reader to populatea the new Deck with.</param>
         /// <returns>A single Card object</returns>
-        public Deck GenerateEmptyDeckFromReader(SqlDataReader reader)
+        public Models.Deck GenerateEmptyDeckFromReader(SqlDataReader reader)
         {
-            return new Deck
+            return new Models.Deck
             {
                 Cards = new List<Card>(),
                 Id = reader.GetInt32(reader.GetOrdinal("DeckId")),

@@ -12,10 +12,14 @@ namespace src
     {
         private readonly ConcurrentDictionary<Type, List<object>> _subscriptions = new ConcurrentDictionary<Type, List<object>>();
 
-
-        public void Register<T>() where T : IApplicationEvent
+        /// <summary>
+        ///     Publish a new event to the EventAggregator
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="message"></param>
+        public void Publish<T>(T message) where T : IApplicationEvent
         {
-            _subscriptions.TryAdd(typeof(T), new List<object>());
+            _subscriptions.TryAdd(typeof(T), new List<object>);
         }
 
         /// <summary>
@@ -35,6 +39,7 @@ namespace src
         /// <typeparam name="T">The parameter to pass and remove from the Aggregator.</typeparam>
         /// <param name="action">The Action<T> delegate parameter to remove from the Aggregator. </param>
         public void UnSubscribe<T>(Action<T> action) where T : IApplicationEvent
+
         {
             List<object> subscribers;
             if (_subscriptions.TryGetValue(typeof(T), out subscribers))

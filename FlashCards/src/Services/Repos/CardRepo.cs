@@ -49,5 +49,29 @@ namespace src.Services.Repos
                 }
             }
         }
+
+        /// <summary>
+        ///     Add a single Card to the database.
+        /// </summary>
+        /// <param name="card">The Card object to add to the database.</param>
+        /// <param name="deckId">The Deck primary key.</param>
+        public void AddSingleCardToDatabase(Card card, int deckId)
+        {
+            var queryString = "INSERT INTO cards " +
+                              "VALUES (@question, @answer, @deckId)";
+
+            using(var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using(var command = new SqlCommand(queryString, connection))
+                {
+                    command.Parameters.AddWithValue("@question", card.Question);
+                    command.Parameters.AddWithValue("@answer", card.Answer);
+                    command.Parameters.AddWithValue("@deckId", deckId);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

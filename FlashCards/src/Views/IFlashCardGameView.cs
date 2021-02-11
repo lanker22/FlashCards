@@ -6,10 +6,22 @@ namespace src.Views
 {
     public interface IFlashCardGameView
     {
-        string CardDisplay { get; set; }
+        string Question { get; set; }
 
-        event EventHandler RevealAnswerClicked;
+        string Answer { get; set; }
+
+        int CurrentCardIndex { get; set; }
+
+        int DeckId { get; set; }
+
+        int CorrectAnswers { get; set; }
+
+        int IncorrectAnswers { get; set; }
+
+        bool IsAnswerShowing { get; set; }
 
         event EventHandler NextCardClicked;
+
+        void Hide();
     }
 }

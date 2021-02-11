@@ -45,7 +45,7 @@ namespace src.Services.Repos
 
         /// <param name="deckId">Primary key of the deck to search for in database</param>
         /// <returns>Returns a single deck</returns>
-        public Deck GetDeck(int deckId)
+        public Models.Deck GetDeck(int deckId)
         {
             var queryString = "SELECT * FROM decks " +
                               "INNER JOIN cards " +
