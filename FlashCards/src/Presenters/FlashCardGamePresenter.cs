@@ -1,4 +1,5 @@
-﻿using src.Events;
+﻿using Prism.Events;
+using src.Events;
 using src.Models;
 using src.Services;
 using src.Views;
@@ -16,25 +17,18 @@ namespace src.Presenters
     {
         private IFlashCardGameView _flashCardGameView;
         private readonly IDeckService _deckService;
-        private readonly ICardService _cardService;
-        private IEventAggregator _eventAggregator;
         private IGameCompletedView _gameCompletedView;
         private Card _currentCard;
         private Deck _deck;
 
         public FlashCardGamePresenter(IFlashCardGameView flashCardGameView,
                                       IDeckService deckService,
-                                      ICardService cardService,
-                                      IEventAggregator eventAggregator,
                                       IGameCompletedView gameCompletedView)
         {
             _flashCardGameView = flashCardGameView;
             _deckService = deckService;
-            _cardService = cardService;
-            _eventAggregator = eventAggregator;
             _gameCompletedView = gameCompletedView;
             _flashCardGameView.NextCardClicked += _flashCardGameView_NextCardClicked;
-            _eventAggregator.Publish(new NotPlayingAgain());
             _gameCompletedView.PlayingAgain += _gameCompletedView_PlayingAgain;
             WireUpView();
         }
@@ -44,9 +38,9 @@ namespace src.Presenters
             WireUpView();
         }
 
-        private void IfNotPlayingAgain()
+        private void _gameCompletedView_(object sender, EventArgs e)
         {
-            _flashCardGameView.Hide();
+            WireUpView();
         }
 
         private void WireUpView()

@@ -13,15 +13,12 @@ namespace src.Presenters
     class EditDeckPresenter
     {
         private readonly ICardService _cardService;
-        private readonly IDeckService _deckService;
         private IEditDeckView _editDeckView;
 
         public EditDeckPresenter(ICardService cardService,
-                                 IDeckService deckService,
                                  IEditDeckView editDeckView)
         {
             _cardService = cardService;
-            _deckService = deckService;
             _editDeckView = editDeckView;
             _editDeckView.NewCardAdded += _editDeckView_NewCardAdded;
         }
@@ -29,18 +26,8 @@ namespace src.Presenters
         private void _editDeckView_NewCardAdded(object sender, EventArgs e)
         {
             var snd = sender as IEditDeckView;
-            
-            try
-            {
-                AddCardToDeck(snd);
-                ResetViewValues();
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-                throw ex;
-            }
+            AddCardToDeck(snd);
+            ResetViewValues();
         }
 
         private void ResetViewValues()
@@ -56,7 +43,6 @@ namespace src.Presenters
                 Answer = deckView.NewAnswer,
                 Question = deckView.NewQuestion
             };
-
             _cardService.AddSingleCardToDeck(cardToAdd, deckView.DeckId);
         }
     }

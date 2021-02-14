@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using src.Models;
+using Prism.Events;
 
 namespace src.Presenters
 {
@@ -14,31 +15,24 @@ namespace src.Presenters
     {
         private IAddDeckView _addDeckView;
         private readonly IDeckService _deckService;
-        private readonly IEventAggregator _eventAggregator;
         public AddDeckPresenter(IAddDeckView addDeckView,
-                                IDeckService deckService,
-                                IEventAggregator eventAggregator)
+                                IDeckService deckService)
         {
             _addDeckView = addDeckView;
             _deckService = deckService;
-            _eventAggregator = eventAggregator;
         }
 
         private void _addDeckView_DeckAddedClicked(object sender, EventArgs e)
         {
             var snd = sender as IAddDeckView;
-            try
-            {
-                _deckService.AddNewDeck(snd.Name);
-                // TODO : Add "deckadded" message event to event aggregator.
-                _addDeckView.Name = "";
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-                throw ex;
-            }
+            _deckService.AddNewDeck(snd.Name);
+            // TODO : Add "deckadded" message event to event aggregator.
+            ResetViewValues();
+        }
+
+        private void ResetViewValues()
+        {
+            _addDeckView.Name = "";
         }
     }
 }

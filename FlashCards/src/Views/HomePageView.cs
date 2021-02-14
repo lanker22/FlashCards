@@ -26,5 +26,15 @@ namespace src.Views
         {
             // TODO: setup all decks on homepage
         }
+
+        private void tlpAllDecks_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void deckControl1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

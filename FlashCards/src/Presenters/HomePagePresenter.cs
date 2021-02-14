@@ -1,4 +1,5 @@
-﻿using src.Models;
+﻿using Prism.Events;
+using src.Models;
 using src.Services;
 using src.Views;
 using System;
@@ -14,15 +15,11 @@ namespace src.Presenters
     {
         private IHomePageView _homePageView;
         private readonly IDeckService _deckService;
-        private IEventAggregator _eventAggregator;
-        
         public HomePagePresenter(IHomePageView homePageView,
-                                 IDeckService deckService,
-                                 IEventAggregator eventAggregator)
+                                 IDeckService deckService)
         {
             _homePageView = homePageView;
             _deckService = deckService;
-            _eventAggregator = eventAggregator;
             _homePageView.HomePageViewLoaded += _homePageView_HomePageViewLoaded;
             _homePageView.DeckDeleted += _homePageView_DeckDeleted;
             WireUpView();
@@ -30,35 +27,20 @@ namespace src.Presenters
 
         private void _homePageView_DeckDeleted(object sender, EventArgs e)
         {
-            try
-            {
-                _deckService.RemoveDeck()
-            }
-        }
-
-        private void Decks_ListChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
-        {
-            _homePageView.WireUpDecks
+            var snd = sender as Deck;
+            _deckService.RemoveDeck(snd.Id);
+            WireUpView();
         }
 
         private void _homePageView_HomePageViewLoaded(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            WireUpView();
         }
 
         public void WireUpView()
         {
-            try
-            {
-                var decks = _deckService.GetAllDecks();
-                _homePageView.Decks = decks;
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-                Console.WriteLine(ex.Message);
-                throw ex;
-            }
+             var decks = _deckService.GetAllDecks();
+            _homePageView.Decks = decks;
         }
     }
 }
