@@ -11,7 +11,7 @@ namespace src.Presenters
     /// <summary>
     ///     Provies values to and executes commands from the HomePage view.
     /// </summary>
-    class HomePagePresenter
+    public class HomePagePresenter
     {
         private IHomePageView _homePageView;
         private readonly IDeckService _deckService;
@@ -20,9 +20,13 @@ namespace src.Presenters
         {
             _homePageView = homePageView;
             _deckService = deckService;
-            _homePageView.HomePageViewLoaded += _homePageView_HomePageViewLoaded;
-            _homePageView.DeckDeleted += _homePageView_DeckDeleted;
+            _homePageView.Load += _homePageView_Load;
             WireUpView();
+        }
+
+        private void _homePageView_Load(object sender, EventArgs e)
+        {
+            WireUpView();   
         }
 
         private void _homePageView_DeckDeleted(object sender, EventArgs e)
@@ -32,12 +36,7 @@ namespace src.Presenters
             WireUpView();
         }
 
-        private void _homePageView_HomePageViewLoaded(object sender, EventArgs e)
-        {
-            WireUpView();
-        }
-
-        public void WireUpView()
+        private void WireUpView()
         {
              var decks = _deckService.GetAllDecks();
             _homePageView.Decks = decks;

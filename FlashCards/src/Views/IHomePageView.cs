@@ -9,13 +9,9 @@ namespace src.Views
     public interface IHomePageView
     {
         List<Deck> Decks { get; set; } 
-        
-        event EventHandler AddDeckClicked;
-
-        event EventHandler HomePageViewLoaded;
-
-        event EventHandler DeckDeleted;
 
         void WireUpDecks();
+
+        event EventHandler Load;
     }
 }

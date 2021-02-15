@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prism.Events;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,29 +11,11 @@ namespace src.Controls
 {
     public partial class DeckControl : UserControl
     {
-        public DeckControl()
+        private readonly int _deckId;
+        public DeckControl(int deckId)
         {
             InitializeComponent();
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void labelNumOfCards_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnDeleteDeck_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
+            _deckId = deckId;
         }
     }
 }
