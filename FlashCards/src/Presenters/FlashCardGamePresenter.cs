@@ -1,5 +1,4 @@
 ﻿using Prism.Events;
-using src.Events;
 using src.Models;
 using src.Services;
 using src.Views;
@@ -33,17 +32,17 @@ namespace src.Presenters
             WireUpView();
         }
 
-        private void _gameCompletedView_PlayingAgain(object sender, EventArgs e)
+        public void _gameCompletedView_PlayingAgain(object sender, EventArgs e)
         {
             WireUpView();
         }
 
-        private void _gameCompletedView_(object sender, EventArgs e)
+        public void _gameCompletedView_(object sender, EventArgs e)
         {
             WireUpView();
         }
 
-        private void WireUpView()
+        public void WireUpView()
         {
             _flashCardGameView.CurrentCardIndex = 0;
             _deck = _deckService.ShuffleDeck(_deckService.GetDeck(_flashCardGameView.DeckId));
@@ -51,7 +50,7 @@ namespace src.Presenters
             SetQuestion(_currentCard.Question);
         }
 
-        private void _flashCardGameView_NextCardClicked(object sender, EventArgs e)
+        public void _flashCardGameView_NextCardClicked(object sender, EventArgs e)
         {
             var snd = sender as IFlashCardGameView;
             if (snd.IsAnswerShowing)
@@ -99,7 +98,7 @@ namespace src.Presenters
 
         public bool IsGameComplete()
         {
-            if(_flashCardGameView.CurrentCardIndex == _deck.Cards.Count)
+            if (_flashCardGameView.CurrentCardIndex == _deck.Cards.Count)
             {
                 return true;
             }

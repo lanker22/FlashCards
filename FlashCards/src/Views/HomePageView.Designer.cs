@@ -121,8 +121,8 @@ namespace src.Views
             this.tlpListOfDecks.Location = new System.Drawing.Point(3, 63);
             this.tlpListOfDecks.Name = "tlpListOfDecks";
             this.tlpListOfDecks.RowCount = 1;
-            this.tlpListOfDecks.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpListOfDecks.Size = new System.Drawing.Size(1362, 135);
+            this.tlpListOfDecks.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tlpListOfDecks.Size = new System.Drawing.Size(1362, 462);
             this.tlpListOfDecks.TabIndex = 4;
             // 
             // HomePageView
@@ -140,9 +140,9 @@ namespace src.Views
             this.panelToolbar.ResumeLayout(false);
             this.panelToolbar.PerformLayout();
             this.ResumeLayout(false);
-
         }
 
+      
         #endregion
         private System.Windows.Forms.TableLayoutPanel tlpMainLayoutPanel;
         private System.Windows.Forms.Panel panelToolbar;
@@ -150,6 +150,5 @@ namespace src.Views
         private System.Windows.Forms.Button btnAddDeck;
         private System.Windows.Forms.Button btnExportDecks;
         private System.Windows.Forms.TableLayoutPanel tlpListOfDecks;
-        private Controls.DeckControl deckControl1;
     }
 }

@@ -11,10 +11,11 @@ namespace src.Presenters
     /// <summary>
     ///     Provides values to and executes commands from the AddDeck view.
     /// </summary>
-    class AddDeckPresenter
+    public class AddDeckPresenter
     {
         private IAddDeckView _addDeckView;
         private readonly IDeckService _deckService;
+
         public AddDeckPresenter(IAddDeckView addDeckView,
                                 IDeckService deckService)
         {
@@ -22,7 +23,7 @@ namespace src.Presenters
             _deckService = deckService;
         }
 
-        private void _addDeckView_DeckAddedClicked(object sender, EventArgs e)
+        public void _addDeckView_DeckAddedClicked(object sender, EventArgs e)
         {
             var snd = sender as IAddDeckView;
             _deckService.AddNewDeck(snd.Name);
@@ -30,7 +31,7 @@ namespace src.Presenters
             ResetViewValues();
         }
 
-        private void ResetViewValues()
+        public void ResetViewValues()
         {
             _addDeckView.Name = "";
         }

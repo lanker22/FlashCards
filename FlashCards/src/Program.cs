@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prism.Events;
 using src.Models;
+using src.Presenters;
 using src.Services;
 using src.Services.Repos;
 using src.Views;
@@ -21,6 +22,10 @@ namespace src
         [STAThread]
         static void Main()
         {
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.EnableVisualStyles();
+            
             // Configure dependency injection
             var host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
@@ -29,17 +34,19 @@ namespace src
                     services.AddTransient<ICardRepo, CardRepo>();
                     services.AddTransient<IRepoHelper, RepoHelper>();
                     services.AddTransient<ICardService, CardService>();
-                    services.AddTransient<IEventAggregator, EventAggregator>();
-                    //services.AddTransient<IHomePageView, HomePageView>();
+                    services.AddSingleton<IHomePageView, HomePageView>();
+                    services.AddTransient<IPresenter<HomePageView>, HomePagePresenter<HomePageView>>();
+                    services.AddTransient<IDeckService, DeckService>();
+                    services.AddTransient<ICardService, CardService>();
                     //services.AddTransient<IAddDeckView, AddDeckView>();
                     //services.AddTransient<IFlashCardGameView, FlashCardGameView>();
                 })
                 .Build();
 
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            PresenterFactory.SetHost(host);
+            var app = ActivatorUtilities.GetServiceOrCreateInstance<IHomePageView>(host.Services);
+
+            Application.Run((Form)app);
         }
     }
 }

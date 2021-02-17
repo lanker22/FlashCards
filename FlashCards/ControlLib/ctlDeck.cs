@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace src
+namespace ControlLib
 {
-    public partial class Form1 : Form
+    public partial class ctlDeck: UserControl
     {
-        public Form1()
+        private readonly int _deckId;
+        public ctlDeck(int deckId)
         {
             InitializeComponent();
+            _deckId = deckId;
         }
-
     }
 }

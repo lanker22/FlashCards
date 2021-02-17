@@ -12,10 +12,12 @@ namespace src.Controls
     public partial class DeckControl : UserControl
     {
         private readonly int _deckId;
-        public DeckControl(int deckId)
+        private readonly int _numOfCards;
+        public DeckControl(int deckId, int numOfCards)
         {
-            InitializeComponent();
             _deckId = deckId;
+            _numOfCards = numOfCards;
+            InitializeComponent();
         }
     }
 }

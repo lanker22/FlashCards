@@ -107,7 +107,6 @@ namespace src.Controls
             this.btnDeleteDeck.TabIndex = 0;
             this.btnDeleteDeck.Text = "DEL";
             this.btnDeleteDeck.UseVisualStyleBackColor = true;
-            this.btnDeleteDeck.Click += btnDeleteDeck_Click;
             // 
             // tlpLabelsContainer
             // 
@@ -133,7 +132,7 @@ namespace src.Controls
             this.labelNumOfCardsInDeck.Name = "labelNumOfCardsInDeck";
             this.labelNumOfCardsInDeck.Size = new System.Drawing.Size(807, 97);
             this.labelNumOfCardsInDeck.TabIndex = 1;
-            this.labelNumOfCardsInDeck.Text = "label1";
+            this.labelNumOfCardsInDeck.Text = $"{_numOfCards} cards";
             this.labelNumOfCardsInDeck.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelDeckName
@@ -155,7 +154,6 @@ namespace src.Controls
             this.DoubleBuffered = true;
             this.Name = "DeckControl";
             this.Size = new System.Drawing.Size(819, 400);
-            this.Load += new System.EventHandler(this.DeckControl_Load);
             this.tlpMainLayout.ResumeLayout(false);
             this.tlpButtonContainer.ResumeLayout(false);
             this.tlpLabelsContainer.ResumeLayout(false);

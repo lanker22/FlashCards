@@ -10,7 +10,7 @@ namespace src.Presenters
     /// <summary>
     ///     Provides values to and executes commands from the EditDeck view.
     /// </summary>
-    class EditDeckPresenter
+    public class EditDeckPresenter
     {
         private readonly ICardService _cardService;
         private IEditDeckView _editDeckView;
@@ -23,20 +23,20 @@ namespace src.Presenters
             _editDeckView.NewCardAdded += _editDeckView_NewCardAdded;
         }
 
-        private void _editDeckView_NewCardAdded(object sender, EventArgs e)
+        public void _editDeckView_NewCardAdded(object sender, EventArgs e)
         {
             var snd = sender as IEditDeckView;
             AddCardToDeck(snd);
             ResetViewValues();
         }
 
-        private void ResetViewValues()
+        public void ResetViewValues()
         {
             _editDeckView.NewQuestion = "";
             _editDeckView.NewAnswer = "";
         }
 
-        private void AddCardToDeck(IEditDeckView deckView)
+        public void AddCardToDeck(IEditDeckView deckView)
         {
             var cardToAdd = new Card
             {
