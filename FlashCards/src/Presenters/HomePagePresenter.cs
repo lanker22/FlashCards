@@ -11,7 +11,7 @@ namespace src.Presenters
     /// <summary>
     ///     Provies values to and executes commands from the HomePage view.
     /// </summary>
-    public class HomePagePresenter<TView> : IPresenter<TView> where TView : HomePageView
+    public class HomePagePresenter<TView> : IPresenter<TView> where TView : IHomePageView
     {
         private readonly IDeckService _deckService;
         public TView View { get; set; }

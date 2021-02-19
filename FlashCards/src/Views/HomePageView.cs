@@ -17,8 +17,8 @@ namespace src.Views
 
         public HomePageView()
         {
-            PresenterFactory.CreateForView(this);
             InitializeComponent();
+            PresenterFactory.CreateForView(this);
         }
 
         public void WireUpView()

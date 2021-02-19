@@ -36,6 +36,7 @@ namespace src
                     services.AddTransient<ICardService, CardService>();
                     services.AddSingleton<IHomePageView, HomePageView>();
                     services.AddTransient<IPresenter<HomePageView>, HomePagePresenter<HomePageView>>();
+                    services.AddTransient<IPresenter<FlashCardGameView>, FlashCardGamePresenter<FlashCardGameView>>();
                     services.AddTransient<IDeckService, DeckService>();
                     services.AddTransient<ICardService, CardService>();
                     //services.AddTransient<IAddDeckView, AddDeckView>();

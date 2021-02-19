@@ -20,8 +20,14 @@ namespace src.Views
 
         bool IsAnswerShowing { get; set; }
 
+        bool LabelGameFinishedIsVisible { get; set; }
+
+        bool BtnPlayAgainIsVisible { get; set; }
+
+        event EventHandler Load;
+
         event EventHandler NextCardClicked;
 
-        void Hide();
+        event EventHandler PlayAgainButtonClicked;
     }
 }
