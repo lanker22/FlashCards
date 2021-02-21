@@ -13,14 +13,18 @@ namespace src.Views
         public FlashCardGameView()
         {
             InitializeComponent();
+        }
+
+        public void WireUpView()
+        {
             var presenter = PresenterFactory.CreateForView(this);
             presenter.InitialSetup();
         }
 
         public string Question { get; set; }
+        public int DeckId { get; set; }
         public string Answer { get; set; }
         public int CurrentCardIndex { get; set; }
-        public int DeckId { get; set; }
         public int CorrectAnswers { get; set; }
         public int IncorrectAnswers { get; set; }
         public bool IsAnswerShowing { get; set; }

@@ -10,10 +10,13 @@ namespace src.Presenters
     /// <summary>
     ///     Provides values to and executes commands from the EditDeck view.
     /// </summary>
-    public class EditDeckPresenter
+    public class EditDeckPresenter<TView> : IPresenter<IEditDeckView> where TView : IEditDeckView
     {
         private readonly ICardService _cardService;
         private IEditDeckView _editDeckView;
+
+        public int DeckId { get; set; }
+        public IEditDeckView View { get; set; }
 
         public EditDeckPresenter(ICardService cardService,
                                  IEditDeckView editDeckView)
@@ -44,6 +47,11 @@ namespace src.Presenters
                 Question = deckView.NewQuestion
             };
             _cardService.AddSingleCardToDeck(cardToAdd, deckView.DeckId);
+        }
+
+        public void InitialSetup()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -16,6 +16,8 @@ namespace src.Presenters
     {
         private readonly IDeckService _deckService;
         public TView View { get; set; }
+        public int DeckId { get; set; }
+
         public MainFormPresenter(IDeckService deckService)
         {
             _deckService = deckService;

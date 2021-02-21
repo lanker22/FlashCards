@@ -11,12 +11,12 @@ using System.Windows.Forms;
 
 namespace src.Views
 {
-    public partial class MainForm : Form, IMainFormView
+    public partial class MainFormView : Form, IMainFormView
     {
         public List<Deck> Decks { get; set; }
 
         private readonly IFormOpener _formOpener;
-        public MainForm(IFormOpener formOpener)
+        public MainFormView(IFormOpener formOpener)
         {
             _formOpener = formOpener;
             InitializeComponent();
@@ -83,6 +83,7 @@ namespace src.Views
                 var snd = s as DeckControl;
                 var form = (FlashCardGameView)_formOpener.ShowModelessForm<FlashCardGameView>();
                 form.DeckId = snd.DeckId;
+                form.WireUpView();
             };
         }
     }

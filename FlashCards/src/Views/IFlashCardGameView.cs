@@ -10,9 +10,9 @@ namespace src.Views
 
         string Answer { get; set; }
 
-        int CurrentCardIndex { get; set; }
-
         int DeckId { get; set; }
+
+        int CurrentCardIndex { get; set; }
 
         int CorrectAnswers { get; set; }
 
@@ -29,6 +29,8 @@ namespace src.Views
         event EventHandler PlayAgainButtonClicked;
 
         event EventHandler Load;
+
+        event EventHandler Shown;
 
         void Show();
     }

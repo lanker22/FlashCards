@@ -24,6 +24,7 @@ namespace src.Presenters
         {
             _deckService = deckService;
         }
+
         public void InitialSetup()
         {
             View.NextCardClicked += View_NextCardClicked;
