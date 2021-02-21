@@ -72,19 +72,21 @@ namespace src.Views
             }
         }
 
+        public void InstantiateFlashCardView(object s, EventArgs e)
+        {
+            var snd = s as DeckControl;
+            var form = (FlashCardGameView)_formOpener.ShowModelessForm<FlashCardGameView>();
+            form.DeckId = snd.DeckId;
+            form.WireUpView();
+        }
+
         public void SubscribeToDeckControlEvents(DeckControl deckControl)
         {
             //deckControl.EditButtonClicked += (s, e) => EditDeckClicked?.Invoke(s as DeckControl, EventArgs.Empty);
 
             deckControl.DeleteButtonClicked += (s, e) => DeleteDeckClicked?.Invoke(s as DeckControl, EventArgs.Empty);
 
-            deckControl.PlayGameButtonClicked += (s, e) =>
-            {
-                var snd = s as DeckControl;
-                var form = (FlashCardGameView)_formOpener.ShowModelessForm<FlashCardGameView>();
-                form.DeckId = snd.DeckId;
-                form.WireUpView();
-            };
+            deckControl.PlayGameButtonClicked += (s, e) => InstantiateFlashCardView(s, e);
         }
     }
 }
