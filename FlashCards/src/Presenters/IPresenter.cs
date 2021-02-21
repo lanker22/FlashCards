@@ -7,5 +7,7 @@ namespace src.Presenters
     public interface IPresenter<TView>
     {
         TView View { get; set; }
+
+        void InitialSetup();
     }
 }

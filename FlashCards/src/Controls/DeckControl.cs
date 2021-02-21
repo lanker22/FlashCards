@@ -11,12 +11,19 @@ namespace src.Controls
 {
     public partial class DeckControl : UserControl
     {
-        private readonly int _deckId;
-        private readonly int _numOfCards;
-        public DeckControl(int deckId, int numOfCards)
+        public int DeckId { get; set; }
+        public int NumOfCards { get; set; }
+        public string DeckName { get; set; }
+
+        public event EventHandler DeleteButtonClicked;
+        public event EventHandler EditButtonClicked;
+        public event EventHandler PlayGameButtonClicked;
+
+        public DeckControl(int deckId, int numOfCards, string deckName)
         {
-            _deckId = deckId;
-            _numOfCards = numOfCards;
+            DeckId = deckId;
+            NumOfCards = numOfCards;
+            DeckName = deckName;
             InitializeComponent();
         }
     }

@@ -24,10 +24,12 @@ namespace src.Views
 
         bool BtnPlayAgainIsVisible { get; set; }
 
-        event EventHandler Load;
-
         event EventHandler NextCardClicked;
 
         event EventHandler PlayAgainButtonClicked;
+
+        event EventHandler Load;
+
+        void Show();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Prism.Events;
+using src.Controls;
 using src.Models;
 using src.Services;
 using src.Views;
@@ -11,16 +12,19 @@ namespace src.Presenters
     /// <summary>
     ///     Provies values to and executes commands from the HomePage view.
     /// </summary>
-    public class HomePagePresenter<TView> : IPresenter<TView> where TView : IHomePageView
+    public class MainFormPresenter<TView> : IPresenter<TView> where TView : IMainFormView
     {
         private readonly IDeckService _deckService;
         public TView View { get; set; }
-        public HomePagePresenter(IDeckService deckService)
+        public MainFormPresenter(IDeckService deckService)
         {
             _deckService = deckService;
+        }
+
+        public void InitialSetup()
+        {
             View.Load += _homePageView_Load;
-            PopulateDecks();
-            View.WireUpView();
+            View.DeleteDeckClicked += _homePageView_DeckDeleted;
         }
 
         public void _homePageView_Load(object sender, EventArgs e)
@@ -31,8 +35,8 @@ namespace src.Presenters
 
         public void _homePageView_DeckDeleted(object sender, EventArgs e)
         {
-            var snd = sender as Deck;
-            _deckService.RemoveDeck(snd.Id);
+            var snd = sender as DeckControl;
+            _deckService.RemoveDeck(snd.DeckId);
             PopulateDecks();
             View.WireUpView();
         }

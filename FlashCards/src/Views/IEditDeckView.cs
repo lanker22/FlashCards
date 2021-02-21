@@ -15,5 +15,9 @@ namespace src.Views
         public string NewAnswer { get; set; }
 
         event EventHandler NewCardAdded;
+
+        event EventHandler Load;
+
+        void Show();
     }
 }

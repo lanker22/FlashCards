@@ -1,7 +1,7 @@
 ﻿
 namespace src.Views
 {
-    partial class HomePageView
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -121,8 +121,8 @@ namespace src.Views
             this.tlpListOfDecks.Location = new System.Drawing.Point(3, 63);
             this.tlpListOfDecks.Name = "tlpListOfDecks";
             this.tlpListOfDecks.RowCount = 1;
-            this.tlpListOfDecks.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tlpListOfDecks.Size = new System.Drawing.Size(1362, 462);
+            this.tlpListOfDecks.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 462F));
+            this.tlpListOfDecks.Size = new System.Drawing.Size(1362, 288);
             this.tlpListOfDecks.TabIndex = 4;
             // 
             // HomePageView
@@ -140,6 +140,7 @@ namespace src.Views
             this.panelToolbar.ResumeLayout(false);
             this.panelToolbar.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
       

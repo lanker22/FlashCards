@@ -34,18 +34,18 @@ namespace src
                     services.AddTransient<ICardRepo, CardRepo>();
                     services.AddTransient<IRepoHelper, RepoHelper>();
                     services.AddTransient<ICardService, CardService>();
-                    services.AddSingleton<IHomePageView, HomePageView>();
-                    services.AddTransient<IPresenter<HomePageView>, HomePagePresenter<HomePageView>>();
+                    services.AddSingleton<IMainFormView, MainForm>();
+                    services.AddTransient<IPresenter<MainForm>, MainFormPresenter<MainForm>>();
                     services.AddTransient<IPresenter<FlashCardGameView>, FlashCardGamePresenter<FlashCardGameView>>();
                     services.AddTransient<IDeckService, DeckService>();
                     services.AddTransient<ICardService, CardService>();
-                    //services.AddTransient<IAddDeckView, AddDeckView>();
-                    //services.AddTransient<IFlashCardGameView, FlashCardGameView>();
+                    services.AddSingleton<IFormOpener, FormOpener>();
+                    services.AddTransient<IFlashCardGameView, FlashCardGameView>();
                 })
                 .Build();
 
             PresenterFactory.SetHost(host);
-            var app = ActivatorUtilities.GetServiceOrCreateInstance<IHomePageView>(host.Services);
+            var app = ActivatorUtilities.GetServiceOrCreateInstance<IMainFormView>(host.Services);
 
             Application.Run((Form)app);
         }

@@ -13,7 +13,8 @@ namespace src.Views
         public FlashCardGameView()
         {
             InitializeComponent();
-            PresenterFactory.CreateForView(this);
+            var presenter = PresenterFactory.CreateForView(this);
+            presenter.InitialSetup();
         }
 
         public string Question { get; set; }
@@ -37,15 +38,5 @@ namespace src.Views
 
         public event EventHandler NextCardClicked;
         public event EventHandler PlayAgainButtonClicked;
-
-        private void FlashCardGameView_Click(object sender, EventArgs e)
-        {
-            NextCardClicked?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void BtnPlayAgain_Click(object sender, EventArgs e)
-        {
-            PlayAgainButtonClicked?.Invoke(this, EventArgs.Empty);
-        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Windows.Forms;
 
 namespace src.Controls
@@ -87,6 +88,7 @@ namespace src.Controls
             this.btnEditDeck.TabIndex = 2;
             this.btnEditDeck.Text = "EDIT";
             this.btnEditDeck.UseVisualStyleBackColor = true;
+            this.btnEditDeck.Click += (s, e) => EditButtonClicked?.Invoke(this, EventArgs.Empty);
             // 
             // btnPlayGame
             // 
@@ -97,6 +99,7 @@ namespace src.Controls
             this.btnPlayGame.TabIndex = 1;
             this.btnPlayGame.Text = "PLAY";
             this.btnPlayGame.UseVisualStyleBackColor = true;
+            this.btnPlayGame.Click += (s, e) => PlayGameButtonClicked?.Invoke(this, EventArgs.Empty);
             // 
             // btnDeleteDeck
             // 
@@ -107,6 +110,7 @@ namespace src.Controls
             this.btnDeleteDeck.TabIndex = 0;
             this.btnDeleteDeck.Text = "DEL";
             this.btnDeleteDeck.UseVisualStyleBackColor = true;
+            this.btnDeleteDeck.Click += (s, e) => DeleteButtonClicked(this, EventArgs.Empty);
             // 
             // tlpLabelsContainer
             // 
@@ -132,7 +136,7 @@ namespace src.Controls
             this.labelNumOfCardsInDeck.Name = "labelNumOfCardsInDeck";
             this.labelNumOfCardsInDeck.Size = new System.Drawing.Size(807, 97);
             this.labelNumOfCardsInDeck.TabIndex = 1;
-            this.labelNumOfCardsInDeck.Text = $"{_numOfCards} cards";
+            this.labelNumOfCardsInDeck.Text = $"{NumOfCards} cards";
             this.labelNumOfCardsInDeck.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelDeckName
@@ -143,7 +147,7 @@ namespace src.Controls
             this.labelDeckName.Name = "labelDeckName";
             this.labelDeckName.Size = new System.Drawing.Size(807, 97);
             this.labelDeckName.TabIndex = 0;
-            this.labelDeckName.Text = "label1";
+            this.labelDeckName.Text = $"{DeckName}";
             this.labelDeckName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // DeckControl

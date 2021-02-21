@@ -23,12 +23,15 @@ namespace src.Presenters
         public FlashCardGamePresenter(IDeckService deckService)
         {
             _deckService = deckService;
+        }
+        public void InitialSetup()
+        {
             View.NextCardClicked += View_NextCardClicked;
             View.PlayAgainButtonClicked += View_PlayAgainButtonClicked;
             BeginGame();
         }
 
-        private void View_PlayAgainButtonClicked(object sender, EventArgs e)
+        public void View_PlayAgainButtonClicked(object sender, EventArgs e)
         {
             BeginGame();
         }

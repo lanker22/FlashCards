@@ -7,7 +7,7 @@ using System.Text;
 
 namespace src.Views
 {
-    public interface IHomePageView
+    public interface IMainFormView
     {
         List<Deck> Decks { get; set; } 
 
@@ -16,7 +16,9 @@ namespace src.Views
         void WireUpView();
         void AddDeckToCell(int row, int col, DeckControl deck);
         void AddNewRowToListOfDecks();
+        void SubscribeToDeckControlEvents(DeckControl deckControl);
 
         event EventHandler Load;
+        event EventHandler DeleteDeckClicked;
     }
 }

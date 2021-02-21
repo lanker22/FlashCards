@@ -11,25 +11,30 @@ using System.Windows.Forms;
 
 namespace src.Views
 {
-    public partial class HomePageView : Form, IHomePageView
+    public partial class MainForm : Form, IMainFormView
     {
         public List<Deck> Decks { get; set; }
 
-        public HomePageView()
+        private readonly IFormOpener _formOpener;
+        public MainForm(IFormOpener formOpener)
         {
+            _formOpener = formOpener;
             InitializeComponent();
-            PresenterFactory.CreateForView(this);
+            var presenter = PresenterFactory.CreateForView(this);
+            presenter.InitialSetup();
         }
+
+        public event EventHandler DeleteDeckClicked;
 
         public void WireUpView()
         {
-            while(IsAnotherRowNeeded())
+            while (!IsAnotherRowNeeded())
             {
                 AddNewRowToListOfDecks();
             }
             AddDecksToPanel();
         }
-        
+
         public bool IsAnotherRowNeeded()
         {
             var rows = tlpListOfDecks.RowCount;
@@ -52,16 +57,33 @@ namespace src.Views
         public void AddDecksToPanel()
         {
             var deckIndex = 0;
-            for(int row = 0; row < tlpListOfDecks.RowCount && deckIndex < Decks.Count; row++)
+            for (int row = 0; row < tlpListOfDecks.RowCount && deckIndex < Decks.Count; row++)
             {
-                for(int col = 0; col < tlpListOfDecks.ColumnCount && deckIndex < Decks.Count; col++)
+                for (int col = 0; col < tlpListOfDecks.ColumnCount && deckIndex < Decks.Count; col++)
                 {
                     var deckId = Decks[deckIndex].Id;
                     var numOfCards = Decks[deckIndex].Cards.Count;
-                    var deckControlToAdd = new DeckControl(deckId, numOfCards);
+                    var deckName = Decks[deckIndex].Name;
+                    var deckControlToAdd = new DeckControl(deckId, numOfCards, deckName);
                     AddDeckToCell(row, col, deckControlToAdd);
+                    SubscribeToDeckControlEvents(deckControlToAdd);
+                    deckIndex += 1;
                 }
             }
+        }
+
+        public void SubscribeToDeckControlEvents(DeckControl deckControl)
+        {
+            //deckControl.EditButtonClicked += (s, e) => EditDeckClicked?.Invoke(s as DeckControl, EventArgs.Empty);
+
+            deckControl.DeleteButtonClicked += (s, e) => DeleteDeckClicked?.Invoke(s as DeckControl, EventArgs.Empty);
+
+            deckControl.PlayGameButtonClicked += (s, e) =>
+            {
+                var snd = s as DeckControl;
+                var form = (FlashCardGameView)_formOpener.ShowModelessForm<FlashCardGameView>();
+                form.DeckId = snd.DeckId;
+            };
         }
     }
 }

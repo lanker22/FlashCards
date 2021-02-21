@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace src.Views
 {
     partial class FlashCardGameView
@@ -91,7 +93,7 @@ namespace src.Views
             this.btnPlayAgain.Text = "Play Again?";
             this.btnPlayAgain.UseVisualStyleBackColor = true;
             this.btnPlayAgain.Visible = false;
-            this.btnPlayAgain.Click += BtnPlayAgain_Click;
+            this.btnPlayAgain.Click += (s, e) => PlayAgainButtonClicked?.Invoke(s, EventArgs.Empty);
             // 
             // FlashCardGameView
             // 
@@ -108,7 +110,7 @@ namespace src.Views
             this.Text = "FlashCardGameView";
             this.ResumeLayout(false);
             this.PerformLayout();
-            this.Click += FlashCardGameView_Click;
+            this.Click += (s, e) => NextCardClicked?.Invoke(this, EventArgs.Empty);
 
         }
 

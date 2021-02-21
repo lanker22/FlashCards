@@ -10,6 +10,7 @@ namespace src.Views
 
         event EventHandler DeckAddedClicked;
 
+        event EventHandler Load;
         void Show();
     }
 }
