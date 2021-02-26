@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Text;
+
+#nullable enable    
 
 namespace src.Services.Repos
 {
@@ -13,18 +16,18 @@ namespace src.Services.Repos
     {
         /// <param name="reader">A SqlCeDataReader instance</param>
         /// <returns>A list of all the current Decks within the reader</returns>
-        public List<Models.Deck> GenerateListOfAllDecksFromReader(SqlDataReader reader)
+        public List<Deck> GenerateListOfAllDecksFromReader(SqlDataReader reader)
         {
             using (reader)
             {
-                var decks = new List<Models.Deck>();
+                var decks = new List<Deck>();
 
                 if (reader.Read())
                 {
 
                     // create the first card to populate IF the query returned data
                     var currentDeck = GenerateEmptyDeckFromReader(reader);
-                    currentDeck.Cards.Add(GenerateCardFromReader(reader));
+                    TryAddCardToDeck(currentDeck, reader);
 
                     // Iterate through rows in reader
                     while (reader.Read())
@@ -33,7 +36,7 @@ namespace src.Services.Repos
                         // IF deck.Name of row is equal to currentDeck.Name, add Card to deck
                         if (currentDeck.Name == reader.GetString(reader.GetOrdinal("Name")))
                         {
-                            currentDeck.Cards.Add(GenerateCardFromReader(reader));
+                            TryAddCardToDeck(currentDeck, reader);
                         }
 
                         // ELSE add currentDeck to decks and create a new currentDeck with a new Name
@@ -41,7 +44,7 @@ namespace src.Services.Repos
                         {
                             decks.Add(currentDeck);
                             currentDeck = GenerateEmptyDeckFromReader(reader);
-                            currentDeck.Cards.Add(GenerateCardFromReader(reader));
+                            TryAddCardToDeck(currentDeck, reader);
                         }
                     }
                     decks.Add(currentDeck);
@@ -55,11 +58,11 @@ namespace src.Services.Repos
         /// </summary>
         /// <param name="reader">A SqlCeDataReader instance</param>
         /// <returns>A Deck object generated with data from reader</returns>
-        public Models.Deck GeneratePopulatedDeckFromReader(SqlDataReader reader)
+        public Deck GeneratePopulatedDeckFromReader(SqlDataReader reader)
         {
             using (reader)
             {
-                var deck = new Models.Deck
+                var deck = new Deck
                 {
                     Cards = new List<Card>(),
                 };
@@ -69,7 +72,6 @@ namespace src.Services.Repos
                     deck.Name = reader.GetString(reader.GetOrdinal("Name"));
                     deck.Id = reader.GetInt32(reader.GetOrdinal("DeckID"));
                     deck.Cards.Add(GenerateCardFromReader(reader));
-
                     while (reader.Read())
                     {
                         deck.Cards.Add(GenerateCardFromReader(reader));
@@ -80,18 +82,69 @@ namespace src.Services.Repos
             }
         }
 
+        private void TryAddCardToDeck(Deck deck, SqlDataReader reader)
+        {
+            if (DeckContainsCards(reader))
+            {
+                deck.Cards.Add(GenerateCardFromReader(reader));
+            }
+        }
+
+        private string? GetCardQuestionFromReader(SqlDataReader reader)
+        {
+            try
+            {
+                return reader.GetString(reader.GetOrdinal("Question"));
+            }
+            catch (SqlNullValueException)
+            {
+                return null;
+            }
+        }
+
+        private string? GetCardAnswerFromReader(SqlDataReader reader)
+        {
+            try
+            {
+                return reader.GetString(reader.GetOrdinal("Answer"));
+            }
+            catch(SqlNullValueException)
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         ///     Creates a new Card object from the current database reader row.
         /// </summary>
         /// <param name="reader">The current database reader row</param>
         /// <returns>A single Card object</returns>
-        public Card GenerateCardFromReader(SqlDataReader reader)
+        private Card? GenerateCardFromReader(SqlDataReader reader)
         {
             return new Card
             {
-                Question = reader.GetString(reader.GetOrdinal("Question")),
-                Answer = reader.GetString(reader.GetOrdinal("Answer"))
+                Question = GetCardQuestionFromReader(reader),
+                Answer = GetCardAnswerFromReader(reader)
             };
+        }
+
+        public string GetDeckNameFromReader(SqlDataReader reader)
+        {
+            var name = "";
+            while (reader.Read())
+            {
+                name = reader.GetString(reader.GetOrdinal("Name"));
+            }
+            return name;
+        }
+
+        private bool DeckContainsCards(SqlDataReader reader)
+        {
+            if(GetCardAnswerFromReader(reader) == null || GetCardQuestionFromReader(reader) == null)
+            {
+                return false;
+            }
+            return true;
         }
 
         /// <summary>
@@ -99,9 +152,9 @@ namespace src.Services.Repos
         /// </summary>
         /// <param name="reader">The current database reader to populatea the new Deck with.</param>
         /// <returns>A single Card object</returns>
-        public Models.Deck GenerateEmptyDeckFromReader(SqlDataReader reader)
+        private Deck GenerateEmptyDeckFromReader(SqlDataReader reader)
         {
-            return new Models.Deck
+            return new Deck
             {
                 Cards = new List<Card>(),
                 Id = reader.GetInt32(reader.GetOrdinal("DeckId")),

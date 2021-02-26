@@ -21,13 +21,22 @@ namespace src.Views
             presenter.InitialSetup();
         }
 
-        public string Question { get; set; }
         public int DeckId { get; set; }
-        public string Answer { get; set; }
+
+        public string DeckName
+        {
+            get { return labelDeckName.Text; }
+            set { labelDeckName.Text = value; }
+        }
         public int CurrentCardIndex { get; set; }
-        public int CorrectAnswers { get; set; }
-        public int IncorrectAnswers { get; set; }
+        public int NumOfCards { get; set; }
         public bool IsAnswerShowing { get; set; }
+        public string QuestionOrAnswerDisplay
+        {
+            get { return textQuestionOrAnswer.Text; }
+            set { textQuestionOrAnswer.Text = value; }
+        }
+
         public bool LabelGameFinishedIsVisible
         {
             get { return labelGameFinished.Visible; }
@@ -40,7 +49,25 @@ namespace src.Views
             set { btnPlayAgain.Visible = value; }
         }
 
-        public event EventHandler NextCardClicked;
+        public string BtnNextItemText
+        {
+            get { return btnNextItem.Text; }
+            set { btnNextItem.Text = value; }
+        }
+
+        public string LabelProgressText
+        {
+            get { return labelProgress.Text; }
+            set { labelProgress.Text = value; }
+        }
+
+        public bool BtnNextItemIsVisible
+        {
+            get { return btnNextItem.Visible; }
+            set { btnNextItem.Visible = value; }
+        }
+
         public event EventHandler PlayAgainButtonClicked;
+        public event EventHandler NextItemButtonClicked;
     }
 }

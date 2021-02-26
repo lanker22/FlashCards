@@ -8,15 +8,18 @@ namespace src.Views
     {
         public int DeckId { get; set; }
         
-        public string Name { get; set; }
+        public string DeckName { get; set; }
 
         public string NewQuestion { get; set; }
 
         public string NewAnswer { get; set; }
 
-        event EventHandler NewCardAdded;
+        event EventHandler CardAddedButtonClicked;
+
+        event EventHandler UpdateDeckNameButtonClicked;
 
         event EventHandler Load;
+        event EventHandler EditDeckViewClosedEvent;
 
         void Show();
     }

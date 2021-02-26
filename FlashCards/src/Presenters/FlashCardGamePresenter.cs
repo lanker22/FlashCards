@@ -1,4 +1,5 @@
 ﻿using Prism.Events;
+using src.Events;
 using src.Models;
 using src.Services;
 using src.Views;
@@ -15,97 +16,109 @@ namespace src.Presenters
     public class FlashCardGamePresenter<TView> : IPresenter<TView> where TView : IFlashCardGameView
     {
         private readonly IDeckService _deckService;
+        private IEventAggregator _eventAggregator;
         private Card _currentCard;
         private Deck _deck;
 
         public TView View { get; set; }
 
-        public FlashCardGamePresenter(IDeckService deckService)
+        public FlashCardGamePresenter(IDeckService deckService, IEventAggregator eventAggregator)
         {
             _deckService = deckService;
+            _eventAggregator = eventAggregator;
         }
 
         public void InitialSetup()
         {
-            View.NextCardClicked += View_NextCardClicked;
+            View.NextItemButtonClicked += View_NextItemButtonClicked;
             View.PlayAgainButtonClicked += View_PlayAgainButtonClicked;
             BeginGame();
         }
 
-        public void View_PlayAgainButtonClicked(object sender, EventArgs e)
+        private void View_PlayAgainButtonClicked(object sender, EventArgs e)
         {
             BeginGame();
         }
 
-        public void View_NextCardClicked(object sender, EventArgs e)
+        private void View_NextItemButtonClicked(object sender, EventArgs e)
         {
-            var snd = sender as IFlashCardGameView;
-            if (snd.IsAnswerShowing)
+            if (View.IsAnswerShowing && !IsGameComplete())
             {
                 GetNextCard();
-                SetCurrentCard();
-                SetQuestion(_currentCard.Question);
+                SetDisplay(_currentCard.Question);
+                SetNextItemButtonText("Reveal Answer");
+                View.IsAnswerShowing = false;
             }
-            else
+            else if (View.IsAnswerShowing && IsGameComplete())
             {
-                SetAnswer(_currentCard.Answer);
+                GameCompleted();       
             }
+            else 
+            {
+                SetDisplay(_currentCard.Answer);
+                SetNextItemButtonText("Next Question");
+                View.IsAnswerShowing = true;
+            }
+            UpdateProgress();
         }
 
-        public void BeginGame()
+        private void BeginGame()
         {
             View.BtnPlayAgainIsVisible = false;
             View.LabelGameFinishedIsVisible = false;
             View.CurrentCardIndex = 0;
-            _deck = _deckService.ShuffleDeck(_deckService.GetDeck(View.DeckId));
-            SetCurrentCard();
-            SetQuestion(_currentCard.Question);
-        }
-
-        public void SetAnswer(string answer)
-        {
-            View.Answer = answer;
-            View.Question = "";
-            View.IsAnswerShowing = true;
-        }
-
-        public void SetQuestion(string question)
-        {
-            View.Question = question;
-            View.Answer = "";
             View.IsAnswerShowing = false;
+            _deck = _deckService.ShuffleDeck(_deckService.GetDeck(View.DeckId));
+            View.NumOfCards = _deck.Cards.Count;
+            View.DeckName = _deck.Name;
+            SetCurrentCard();
+            SetDisplay(_currentCard.Question);
+            SetNextItemButtonText("Reveal Answer");
+            UpdateProgress();
+            View.BtnNextItemIsVisible = true;
         }
 
-        public void GetNextCard()
+        private void SetDisplay(string questionOrAnswer)
         {
-            if (!IsGameComplete())
-            {
-                View.CurrentCardIndex += 1;
-            }
-            else
-            {
-                GameCompleted();
-            }
+            View.QuestionOrAnswerDisplay = questionOrAnswer;
         }
 
-        public void SetCurrentCard()
+        private void GetNextCard()
+        {
+            View.CurrentCardIndex += 1;
+            SetCurrentCard();
+        }
+
+        private void SetCurrentCard()
         {
             _currentCard = _deck.Cards.ElementAt(View.CurrentCardIndex);
         }
 
-        public bool IsGameComplete()
+        private bool IsGameComplete()
         {
-            if (View.CurrentCardIndex == _deck.Cards.Count)
+            if (View.CurrentCardIndex == _deck.Cards.Count-1)
             {
                 return true;
             }
             return false;
         }
 
-        public void GameCompleted()
+        private void GameCompleted()
         {
             View.BtnPlayAgainIsVisible = true;
             View.LabelGameFinishedIsVisible = true;
+            View.BtnNextItemIsVisible = false;
+            SetDisplay(" ");
+        }
+
+        private void SetNextItemButtonText(string text)
+        {
+            View.BtnNextItemText = text;
+        }
+
+        private void UpdateProgress()
+        {
+            View.LabelProgressText = $"{View.CurrentCardIndex + 1} / {View.NumOfCards}";
         }
     }
 }

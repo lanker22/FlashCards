@@ -34,13 +34,15 @@ namespace src
                     services.AddTransient<ICardRepo, CardRepo>();
                     services.AddTransient<IRepoHelper, RepoHelper>();
                     services.AddTransient<ICardService, CardService>();
-                    services.AddSingleton<IMainFormView, MainForm>();
-                    services.AddTransient<IPresenter<MainForm>, MainFormPresenter<MainForm>>();
+                    services.AddSingleton<IMainFormView, MainFormView>();
+                    services.AddTransient<IPresenter<MainFormView>, MainFormPresenter<MainFormView>>();
                     services.AddTransient<IPresenter<FlashCardGameView>, FlashCardGamePresenter<FlashCardGameView>>();
+                    services.AddTransient<IPresenter<AddDeckView>, AddDeckPresenter<AddDeckView>>();
+                    services.AddTransient<IPresenter<EditDeckView>, EditDeckPresenter<EditDeckView>>();
                     services.AddTransient<IDeckService, DeckService>();
                     services.AddTransient<ICardService, CardService>();
                     services.AddSingleton<IFormOpener, FormOpener>();
-                    services.AddTransient<IFlashCardGameView, FlashCardGameView>();
+                    services.AddSingleton<IEventAggregator, EventAggregator>();
                 })
                 .Build();
 

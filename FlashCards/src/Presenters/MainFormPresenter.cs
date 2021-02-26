@@ -1,5 +1,6 @@
 ﻿using Prism.Events;
 using src.Controls;
+using src.Events;
 using src.Models;
 using src.Services;
 using src.Views;
@@ -15,38 +16,58 @@ namespace src.Presenters
     public class MainFormPresenter<TView> : IPresenter<TView> where TView : IMainFormView
     {
         private readonly IDeckService _deckService;
-        public TView View { get; set; }
-        public int DeckId { get; set; }
 
-        public MainFormPresenter(IDeckService deckService)
+        private IEventAggregator _eventAggregator;
+        public TView View { get; set; }
+
+        public MainFormPresenter(IDeckService deckService,
+                                 IEventAggregator eventAggregator)
         {
             _deckService = deckService;
+            _eventAggregator = eventAggregator;
         }
 
         public void InitialSetup()
         {
-            View.Load += _homePageView_Load;
-            View.DeleteDeckClicked += _homePageView_DeckDeleted;
+            View.Load += OnViewLoaded;
+            View.DeleteDeckClicked += OnDeckDeleteButtonClicked;
+            _eventAggregator.GetEvent<AddDeckFormClosedEvent>().Subscribe(OnAddDeckFormClosed);
+            _eventAggregator.GetEvent<EditDeckFormClosedEvent>().Subscribe(OnEditDeckFormClosed);
         }
 
-        public void _homePageView_Load(object sender, EventArgs e)
+        private void OnEditDeckFormClosed(string message)
         {
-            PopulateDecks();
-            View.WireUpView();
+            RefreshView();
         }
 
-        public void _homePageView_DeckDeleted(object sender, EventArgs e)
+        private void OnViewLoaded(object sender, EventArgs e)
+        {
+            RefreshView();
+        }
+
+        private void OnDeckDeleteButtonClicked(object sender, EventArgs e)
         {
             var snd = sender as DeckControl;
             _deckService.RemoveDeck(snd.DeckId);
-            PopulateDecks();
-            View.WireUpView();
+            RefreshView();
         }
 
-        public void PopulateDecks()
+        private void PopulateDecks()
         {
             var decks = _deckService.GetAllDecks();
             View.Decks = decks;
+        }
+
+        private void OnAddDeckFormClosed(string message)
+        {
+            RefreshView();
+        }
+
+        private void RefreshView()
+        {
+            PopulateDecks();
+            View.RefreshDecksPanel();
+            View.WireUpView();
         }
     }
 }

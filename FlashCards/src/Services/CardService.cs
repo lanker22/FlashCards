@@ -11,10 +11,10 @@ namespace src.Services
     /// </summary>
     public class CardService : ICardService
     {
-        private readonly ICardRepo _cardrepo;
+        private readonly ICardRepo _cardRepo;
         public CardService(ICardRepo cardRepo)
         {
-            _cardrepo = cardRepo;
+            _cardRepo = cardRepo;
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace src.Services
         /// <param name="deckId">Deck to put the cards into</param>
         public void AddNewCards(List<Card> cards, int deckId)
         {
-            _cardrepo.AddCardsToDatabase(cards, deckId);
+            _cardRepo.AddCardsToDatabase(cards, deckId);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace src.Services
         /// <param name="deckId">The Deck to add the Card to.</param>
         public void AddSingleCardToDeck(Card card, int deckId)
         {
-            _cardrepo.AddSingleCardToDatabase(card, deckId);
+            _cardRepo.AddSingleCardToDatabase(card, deckId);
         }
     }
 }

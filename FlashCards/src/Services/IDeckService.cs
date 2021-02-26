@@ -10,5 +10,7 @@ namespace src.Services
         Deck GetDeck(int deckId);
         void RemoveDeck(int deckId);
         Deck ShuffleDeck(Deck deck);
+        void UpdateDeckName(int deckId, string newDeckName);
+        string GetDeckName(int deckId);
     }
 }

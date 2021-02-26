@@ -11,12 +11,8 @@ namespace src.Views
     {
         List<Deck> Decks { get; set; } 
 
-        void AddDecksToPanel();
-        bool IsAnotherRowNeeded();
         void WireUpView();
-        void AddDeckToCell(int row, int col, DeckControl deck);
-        void AddNewRowToListOfDecks();
-        void SubscribeToDeckControlEvents(DeckControl deckControl);
+        void RefreshDecksPanel();
 
         event EventHandler Load;
         event EventHandler DeleteDeckClicked;

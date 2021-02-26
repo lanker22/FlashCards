@@ -14,13 +14,6 @@ namespace src.Services.Repos
     {
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["FlashCardsDatabase"].ConnectionString;
 
-        private readonly IRepoHelper _helper;
-
-        public CardRepo(IRepoHelper helper)
-        {
-            _helper = helper;
-        }
-
         /// <summary>
         ///     Insert a list of Cards into the database.
         /// </summary>

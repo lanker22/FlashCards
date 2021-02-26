@@ -31,7 +31,6 @@ namespace src.Views
         {
             this.tlpMainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panelToolbar = new System.Windows.Forms.Panel();
-            this.btnViewStats = new System.Windows.Forms.Button();
             this.btnAddDeck = new System.Windows.Forms.Button();
             this.btnExportDecks = new System.Windows.Forms.Button();
             this.tlpListOfDecks = new System.Windows.Forms.TableLayoutPanel();
@@ -62,7 +61,6 @@ namespace src.Views
             // 
             // panelToolbar
             // 
-            this.panelToolbar.Controls.Add(this.btnViewStats);
             this.panelToolbar.Controls.Add(this.btnAddDeck);
             this.panelToolbar.Controls.Add(this.btnExportDecks);
             this.panelToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -70,16 +68,6 @@ namespace src.Views
             this.panelToolbar.Name = "panelToolbar";
             this.panelToolbar.Size = new System.Drawing.Size(1362, 54);
             this.panelToolbar.TabIndex = 3;
-            // 
-            // btnViewStats
-            // 
-            this.btnViewStats.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnViewStats.Location = new System.Drawing.Point(290, 0);
-            this.btnViewStats.Name = "btnViewStats";
-            this.btnViewStats.Size = new System.Drawing.Size(145, 54);
-            this.btnViewStats.TabIndex = 4;
-            this.btnViewStats.Text = "View Stats";
-            this.btnViewStats.UseVisualStyleBackColor = true;
             // 
             // btnAddDeck
             // 
@@ -90,6 +78,7 @@ namespace src.Views
             this.btnAddDeck.TabIndex = 2;
             this.btnAddDeck.Text = "Add Deck";
             this.btnAddDeck.UseVisualStyleBackColor = true;
+            this.btnAddDeck.Click += BtnAddDeck_Click;
             // 
             // btnExportDecks
             // 
@@ -125,7 +114,7 @@ namespace src.Views
             this.tlpListOfDecks.Size = new System.Drawing.Size(1362, 288);
             this.tlpListOfDecks.TabIndex = 4;
             // 
-            // HomePageView
+            // MainFormView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -134,7 +123,7 @@ namespace src.Views
             this.ClientSize = new System.Drawing.Size(1370, 631);
             this.Controls.Add(this.tlpMainLayoutPanel);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.Name = "HomePageView";
+            this.Name = "MainFormView";
             this.Text = "HomePageView";
             this.tlpMainLayoutPanel.ResumeLayout(false);
             this.panelToolbar.ResumeLayout(false);
@@ -143,11 +132,16 @@ namespace src.Views
 
         }
 
-      
+        private void BtnAddDeck_Click(object sender, System.EventArgs e)
+        {
+            var form = (AddDeckView)_formOpener.ShowModelessForm<AddDeckView>();
+            form.Show();
+        }
+
+
         #endregion
         private System.Windows.Forms.TableLayoutPanel tlpMainLayoutPanel;
         private System.Windows.Forms.Panel panelToolbar;
-        private System.Windows.Forms.Button btnViewStats;
         private System.Windows.Forms.Button btnAddDeck;
         private System.Windows.Forms.Button btnExportDecks;
         private System.Windows.Forms.TableLayoutPanel tlpListOfDecks;

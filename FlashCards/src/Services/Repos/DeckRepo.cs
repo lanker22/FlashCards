@@ -27,7 +27,7 @@ namespace src.Services.Repos
         {
             var queryString = "SELECT * " +
                               "FROM decks " +
-                              "INNER JOIN cards " +
+                              "LEFT JOIN cards " +
                               "ON decks.DeckID = cards.DeckID";
 
             using (var connection = new SqlConnection(_connectionString))
@@ -45,7 +45,7 @@ namespace src.Services.Repos
 
         /// <param name="deckId">Primary key of the deck to search for in database</param>
         /// <returns>Returns a single deck</returns>
-        public Models.Deck GetDeck(int deckId)
+        public Deck GetDeck(int deckId)
         {
             var queryString = "SELECT * FROM decks " +
                               "INNER JOIN cards " +
@@ -104,6 +104,41 @@ namespace src.Services.Repos
                 {
                     command.Parameters.AddWithValue("@deckID", deckId);
                     command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void ChangeDeckName(int deckId, string newDeckName)
+        {
+            var queryString = "UPDATE decks " + 
+                              "SET name = @Name " + 
+                              "WHERE decks.DeckID = @deckID";
+
+            using(var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using(var command = new SqlCommand(queryString, connection))
+                {
+                    command.Parameters.AddWithValue("@Name", newDeckName);
+                    command.Parameters.AddWithValue("@deckID", deckId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public string GetDeckNameFromDatabase(int deckId)
+        {
+            var queryString = "SELECT name " +
+                              "FROM decks " +
+                              "WHERE decks.DeckID = @deckId";
+
+            using(var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using(var command = new SqlCommand(queryString, connection))
+                {
+                    command.Parameters.AddWithValue("@deckId", deckId);
+                    return _helper.GetDeckNameFromReader(command.ExecuteReader());
                 }
             }
         }

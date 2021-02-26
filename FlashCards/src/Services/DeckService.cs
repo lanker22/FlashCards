@@ -23,7 +23,7 @@ namespace src.Services
         ///     Retrieve all the current decks.
         /// </summary>
         /// <returns>A List<Deck></returns>
-        public List<Models.Deck> GetAllDecks()
+        public List<Deck> GetAllDecks()
         {
             return _deckRepo.GetAllDecksFromDatabase();
         }
@@ -33,7 +33,7 @@ namespace src.Services
         /// </summary>
         /// <param name="deckId">Primary key of the deck to retrieve</param>
         /// <returns>A single deck</returns>
-        public Models.Deck GetDeck(int deckId)
+        public Deck GetDeck(int deckId)
         {
             return _deckRepo.GetDeck(deckId);
         }
@@ -66,6 +66,16 @@ namespace src.Services
             var rnd = new Random();
             deck.Cards = deck.Cards.OrderBy(x => rnd.Next()).ToList();
             return deck;
+        }
+
+        public void UpdateDeckName(int deckId, string newDeckName)
+        {
+            _deckRepo.ChangeDeckName(deckId, newDeckName);
+        }
+
+        public string GetDeckName(int deckId)
+        {
+            return _deckRepo.GetDeckNameFromDatabase(deckId);
         }
     }
 }
