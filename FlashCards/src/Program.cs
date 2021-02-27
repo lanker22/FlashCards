@@ -43,6 +43,7 @@ namespace src
                     services.AddTransient<ICardService, CardService>();
                     services.AddSingleton<IFormOpener, FormOpener>();
                     services.AddSingleton<IEventAggregator, EventAggregator>();
+                    services.AddTransient<IExcelService, ExcelService>();
                 })
                 .Build();
 
