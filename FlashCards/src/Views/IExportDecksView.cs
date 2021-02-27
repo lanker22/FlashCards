@@ -13,5 +13,7 @@ namespace src.Views
         public event EventHandler BrowseFileButtonClicked;
 
         public event EventHandler CreateExcelFileButtonClicked;
+
+        void Close();
     }
 }

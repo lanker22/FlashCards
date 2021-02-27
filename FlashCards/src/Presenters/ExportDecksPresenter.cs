@@ -36,7 +36,9 @@ namespace src.Presenters
             }
             else
             {
-                await _excelService.SaveExcelFile(View.FileLocation, View.FileName);
+                var file = await _excelService.CreateExcelFile(View.FileLocation, View.FileName);
+                _excelService.OpenExcelFile(file);
+                View.Close();
             }
         }
 

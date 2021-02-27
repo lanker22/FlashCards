@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 
 namespace src.Services
 {
     public interface IExcelService
     {
-        Task<object> CreateExcelFile();
-        Task<object> SaveExcelFile(string fileLocation, string fileName);
+        Task<string> CreateExcelFile(string fileLocation, string fileName);
+        void OpenExcelFile(string filePath);
     }
 }

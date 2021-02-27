@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace src.Services
 {
@@ -17,28 +18,43 @@ namespace src.Services
             _deckService = deckService;
         }
 
-        public async Task<object> SaveExcelFile(string fileLocation, string fileName)
+        public async Task<string> CreateExcelFile(string fileLocation, string fileName)
         {
             var file = GenerateEmptyWorkbook(fileLocation, fileName);
-        }
-
-        private async Task<object> CreateExcelFile(FileInfo file)
-        {
             var decks = _deckService.GetAllDecks();
             DeleteIfExists(file);
             using (var package = new ExcelPackage(file))
             {
-                AddSheetForEachDeck(package, decks);
-
+                PopulateWorkbook(decks, package.Workbook);
+                await package.SaveAsync();
+                return file.FullName;
             }
         }
 
-        private void AddSheetForEachDeck(ExcelPackage package, IEnumerable<Deck> decks)
+        public void OpenExcelFile(string filePath)
         {
-            foreach(var deck in decks)
+            var xl = new Excel.Application();
+            xl.Workbooks.Open(filePath);
+        }
+
+        private void PopulateWorkbook(List<Deck> decks, ExcelWorkbook wb)
+        {
+            foreach (var deck in decks)
             {
-                package.Workbook.Worksheets.Add($"{deck.Name}");
+                var ws = CreateWorkSheet(deck.Name, wb);
+                PopulateWorkSheet(ws, deck);
             }
+        }
+
+        private ExcelWorksheet CreateWorkSheet(string name, ExcelWorkbook wb)
+        {
+            return wb.Worksheets.Add($"{name}");
+        }
+
+        private void PopulateWorkSheet(ExcelWorksheet ws, Deck deck)
+        {
+            var range = ws.Cells.LoadFromCollection(deck.Cards, true);
+            range.AutoFitColumns();
         }
 
         private void DeleteIfExists(FileInfo file)
