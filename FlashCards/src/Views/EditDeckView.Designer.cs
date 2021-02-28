@@ -130,21 +130,6 @@ namespace src.Views
 
         }
 
-        private void EditDeckView_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            EditDeckViewClosedEvent?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void BtnUpdateDeckName_Click(object sender, EventArgs e)
-        {
-            UpdateDeckNameButtonClicked?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void BtnAddCard_Click(object sender, EventArgs e)
-        {
-            CardAddedButtonClicked?.Invoke(this, EventArgs.Empty);
-        }
-
         #endregion
 
         private System.Windows.Forms.Label labelDeckName;

@@ -20,6 +20,8 @@ namespace src.Views
         {
             _formOpener = formOpener;
             InitializeComponent();
+            btnExportDecks.Click += BtnExportDecks_Click;
+            btnAddDeck.Click += BtnAddDeck_Click;
             var presenter = PresenterFactory.CreateForView(this);
             presenter.InitialSetup();
         }
@@ -28,24 +30,35 @@ namespace src.Views
 
         public void WireUpView()
         {
-            while (!IsAnotherRowNeeded())
+            while (AnotherRowNeeded())
             {
                 AddNewRowToListOfDecks();
             }
             AddAllDecksToPanel();
         }
 
-        private bool IsAnotherRowNeeded()
+        private void BtnExportDecks_Click(object sender, EventArgs e)
+        {
+            InstantiateExportDecksView();
+        }
+
+        private void BtnAddDeck_Click(object sender, EventArgs e)
+        {
+            var form = (AddDeckView)_formOpener.ShowModelessForm<AddDeckView>();
+            form.Show();
+        }
+
+        private bool AnotherRowNeeded()
         {
             var rows = tlpListOfDecks.RowCount;
             var cols = tlpListOfDecks.ColumnCount;
             var availableCells = rows * cols;
-            return Decks.Count < availableCells;
+            return Decks.Count > availableCells;
         }
 
         private void AddNewRowToListOfDecks()
         {
-            tlpListOfDecks.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
+            tlpListOfDecks.RowStyles.Add(new RowStyle(SizeType.Absolute, 275F));
             tlpListOfDecks.RowCount++;
         }
 
@@ -54,9 +67,15 @@ namespace src.Views
             tlpListOfDecks.Controls.Add(deck, col, row);
         }
 
-        public void RefreshDecksPanel()
+        public void ClearDecksPanel()
         {
             tlpListOfDecks.Controls.Clear();
+        }
+
+        public void RemoveDeckControl(DeckControl deckControl)
+        {
+            tlpListOfDecks.Controls.Remove(deckControl);
+            deckControl.Dispose();
         }
 
         private void AddAllDecksToPanel()
@@ -77,9 +96,17 @@ namespace src.Views
             var deckId = Decks[deckIndex].Id;
             var numOfCards = Decks[deckIndex].Cards.Count;
             var deckName = Decks[deckIndex].Name;
-            var deckControlToAdd = new DeckControl(deckId, numOfCards, deckName);
+            var deckControlToAdd = new DeckControl();
+            SetDeckControlProperties(deckControlToAdd, deckId, deckName, numOfCards);
             AddDeckToCell(row, col, deckControlToAdd);
             SubscribeToDeckControlEvents(deckControlToAdd);
+        }
+
+        private void SetDeckControlProperties(DeckControl deckControlToAdd, int deckId, string deckName, int numOfCardsInDeck)
+        {
+            deckControlToAdd.DeckId = deckId;
+            deckControlToAdd.DeckName = deckName;
+            deckControlToAdd.NumOfCards = numOfCardsInDeck;
         }
 
         private void HandlePlayGameButtonClickedEvent(object s, EventArgs e)
@@ -100,6 +127,11 @@ namespace src.Views
             var form = (FlashCardGameView)_formOpener.ShowModelessForm<FlashCardGameView>();
             form.DeckId = deckControl.DeckId;
             form.WireUpView();
+        }
+
+        private void InstantiateExportDecksView()
+        {
+            _formOpener.ShowModelessForm<ExportDecksView>();
         }
 
         private void SubscribeToDeckControlEvents(DeckControl deckControl)

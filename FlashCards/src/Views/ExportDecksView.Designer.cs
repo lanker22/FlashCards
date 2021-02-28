@@ -70,7 +70,6 @@ namespace src.Views
             this.btnCreateExcelFile.TabIndex = 3;
             this.btnCreateExcelFile.Text = "Create";
             this.btnCreateExcelFile.UseVisualStyleBackColor = true;
-            this.btnCreateExcelFile.Click += BtnCreateExcelFile_Click;
             // 
             // ExportDecksView
             // 
@@ -86,16 +85,6 @@ namespace src.Views
             this.ResumeLayout(false);
             this.PerformLayout();
 
-        }
-
-        private void BtnCreateExcelFile_Click(object sender, EventArgs e)
-        {
-            CreateExcelFileButtonClicked?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void BtnBrowseFilesystem_Click(object sender, System.EventArgs e)
-        {
-            BrowseFileButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion

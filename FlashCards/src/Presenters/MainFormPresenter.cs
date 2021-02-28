@@ -66,7 +66,7 @@ namespace src.Presenters
         private void RefreshView()
         {
             PopulateDecks();
-            View.RefreshDecksPanel();
+            View.ClearDecksPanel();
             View.WireUpView();
         }
     }

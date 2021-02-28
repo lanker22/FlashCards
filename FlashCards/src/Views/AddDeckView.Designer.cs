@@ -61,7 +61,6 @@ namespace src.Views
             this.btnAddDeck.TabIndex = 4;
             this.btnAddDeck.Text = "Add Deck";
             this.btnAddDeck.UseVisualStyleBackColor = true;
-            this.btnAddDeck.Click += BtnAddDeck_Click;
             // 
             // AddDeckView
             // 
@@ -75,18 +74,7 @@ namespace src.Views
             this.Text = "AddDeckView";
             this.ResumeLayout(false);
             this.PerformLayout();
-            this.FormClosed += AddDeckView_FormClosed;
 
-        }
-
-        private void AddDeckView_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
-        {
-            AddDeckViewClosedEvent?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void BtnAddDeck_Click(object sender, System.EventArgs e)
-        {
-            DeckAddedClicked?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion

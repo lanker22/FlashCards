@@ -13,6 +13,9 @@ namespace src.Views
         public EditDeckView()
         {
             InitializeComponent();
+            btnUpdateName.Click += BtnUpdateDeckName_Click;
+            btnAddCard.Click += BtnAddCard_Click;
+            FormClosed += EditDeckView_FormClosed;
         }
 
         public void InitiatePresenter()
@@ -44,5 +47,20 @@ namespace src.Views
         public event EventHandler CardAddedButtonClicked;
         public event EventHandler UpdateDeckNameButtonClicked;
         public event EventHandler EditDeckViewClosedEvent;
+
+        private void EditDeckView_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            EditDeckViewClosedEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void BtnUpdateDeckName_Click(object sender, EventArgs e)
+        {
+            UpdateDeckNameButtonClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void BtnAddCard_Click(object sender, EventArgs e)
+        {
+            CardAddedButtonClicked?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

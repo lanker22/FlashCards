@@ -12,7 +12,8 @@ namespace src.Views
         List<Deck> Decks { get; set; } 
 
         void WireUpView();
-        void RefreshDecksPanel();
+        void RemoveDeckControl(DeckControl deckControl);
+        void ClearDecksPanel();
 
         event EventHandler Load;
         event EventHandler DeleteDeckClicked;

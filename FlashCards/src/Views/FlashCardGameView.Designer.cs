@@ -33,7 +33,7 @@ namespace src.Views
         private void InitializeComponent()
         {
             this.labelDeckName = new System.Windows.Forms.Label();
-            this.textQuestionOrAnswer = new System.Windows.Forms.TextBox();
+            this.textboxQuestionOrAnswer = new System.Windows.Forms.TextBox();
             this.labelQuestionOrAnswer = new System.Windows.Forms.Label();
             this.labelProgress = new System.Windows.Forms.Label();
             this.labelGameFinished = new System.Windows.Forms.Label();
@@ -52,14 +52,16 @@ namespace src.Views
             this.labelDeckName.Size = new System.Drawing.Size(0, 30);
             this.labelDeckName.TabIndex = 0;
             // 
-            // textQuestionOrAnswer
+            // textboxQuestionOrAnswer
             // 
-            this.textQuestionOrAnswer.Location = new System.Drawing.Point(76, 116);
-            this.textQuestionOrAnswer.Multiline = true;
-            this.textQuestionOrAnswer.Name = "textQuestionOrAnswer";
-            this.textQuestionOrAnswer.ReadOnly = true;
-            this.textQuestionOrAnswer.Size = new System.Drawing.Size(383, 168);
-            this.textQuestionOrAnswer.TabIndex = 1;
+            this.textboxQuestionOrAnswer.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textboxQuestionOrAnswer.ForeColor = System.Drawing.Color.Black;
+            this.textboxQuestionOrAnswer.Location = new System.Drawing.Point(76, 116);
+            this.textboxQuestionOrAnswer.Multiline = true;
+            this.textboxQuestionOrAnswer.Name = "textboxQuestionOrAnswer";
+            this.textboxQuestionOrAnswer.ReadOnly = true;
+            this.textboxQuestionOrAnswer.Size = new System.Drawing.Size(383, 168);
+            this.textboxQuestionOrAnswer.TabIndex = 1;
             // 
             // labelQuestionOrAnswer
             // 
@@ -116,7 +118,7 @@ namespace src.Views
             this.Controls.Add(this.labelGameFinished);
             this.Controls.Add(this.labelProgress);
             this.Controls.Add(this.labelQuestionOrAnswer);
-            this.Controls.Add(this.textQuestionOrAnswer);
+            this.Controls.Add(this.textboxQuestionOrAnswer);
             this.Controls.Add(this.labelDeckName);
             this.Name = "FlashCardGameView";
             this.Text = "FlashCardGameView";
@@ -125,20 +127,10 @@ namespace src.Views
 
         }
 
-        private void BtnPlayAgain_Click(object sender, EventArgs e)
-        {
-            PlayAgainButtonClicked?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void BtnNextItem_Click(object sender, EventArgs e)
-        {
-            NextItemButtonClicked?.Invoke(sender, EventArgs.Empty);
-        }
-
         #endregion
 
         private System.Windows.Forms.Label labelDeckName;
-        private System.Windows.Forms.TextBox textQuestionOrAnswer;
+        private System.Windows.Forms.TextBox textboxQuestionOrAnswer;
         private System.Windows.Forms.Label labelQuestionOrAnswer;
         private System.Windows.Forms.Label labelProgress;
         private System.Windows.Forms.Label labelGameFinished;

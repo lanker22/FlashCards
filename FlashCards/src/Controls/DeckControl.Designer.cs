@@ -32,148 +32,103 @@ namespace src.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            this.tlpMainLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.tlpButtonContainer = new System.Windows.Forms.TableLayoutPanel();
-            this.btnEditDeck = new System.Windows.Forms.Button();
-            this.btnPlayGame = new System.Windows.Forms.Button();
-            this.btnDeleteDeck = new System.Windows.Forms.Button();
-            this.tlpLabelsContainer = new System.Windows.Forms.TableLayoutPanel();
+            this.panelMainLayout = new System.Windows.Forms.Panel();
             this.labelNumOfCardsInDeck = new System.Windows.Forms.Label();
             this.labelDeckName = new System.Windows.Forms.Label();
-            this.tlpMainLayout.SuspendLayout();
-            this.tlpButtonContainer.SuspendLayout();
-            this.tlpLabelsContainer.SuspendLayout();
+            this.btnDeleteDeck = new System.Windows.Forms.Button();
+            this.btnPlayGame = new System.Windows.Forms.Button();
+            this.btnEditDeck = new System.Windows.Forms.Button();
+            this.panelMainLayout.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tlpMainLayout
+            // panelMainLayout
             // 
-            this.tlpMainLayout.ColumnCount = 1;
-            this.tlpMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpMainLayout.Controls.Add(this.tlpButtonContainer, 0, 1);
-            this.tlpMainLayout.Controls.Add(this.tlpLabelsContainer, 0, 0);
-            this.tlpMainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpMainLayout.Location = new System.Drawing.Point(0, 0);
-            this.tlpMainLayout.Name = "tlpMainLayout";
-            this.tlpMainLayout.RowCount = 2;
-            this.tlpMainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpMainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpMainLayout.Size = new System.Drawing.Size(819, 400);
-            this.tlpMainLayout.TabIndex = 0;
-            // 
-            // tlpButtonContainer
-            // 
-            this.tlpButtonContainer.ColumnCount = 3;
-            this.tlpButtonContainer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpButtonContainer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpButtonContainer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpButtonContainer.Controls.Add(this.btnEditDeck, 2, 0);
-            this.tlpButtonContainer.Controls.Add(this.btnPlayGame, 1, 0);
-            this.tlpButtonContainer.Controls.Add(this.btnDeleteDeck, 0, 0);
-            this.tlpButtonContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpButtonContainer.Location = new System.Drawing.Point(3, 203);
-            this.tlpButtonContainer.Name = "tlpButtonContainer";
-            this.tlpButtonContainer.RowCount = 1;
-            this.tlpButtonContainer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpButtonContainer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 177F));
-            this.tlpButtonContainer.Size = new System.Drawing.Size(813, 194);
-            this.tlpButtonContainer.TabIndex = 0;
-            // 
-            // btnEditDeck
-            // 
-            this.btnEditDeck.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnEditDeck.Location = new System.Drawing.Point(545, 3);
-            this.btnEditDeck.Name = "btnEditDeck";
-            this.btnEditDeck.Size = new System.Drawing.Size(265, 188);
-            this.btnEditDeck.TabIndex = 2;
-            this.btnEditDeck.Text = "EDIT";
-            this.btnEditDeck.UseVisualStyleBackColor = true;
-            this.btnEditDeck.Click += (s, e) => EditButtonClicked?.Invoke(this, EventArgs.Empty);
-            // 
-            // btnPlayGame
-            // 
-            this.btnPlayGame.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnPlayGame.Location = new System.Drawing.Point(274, 3);
-            this.btnPlayGame.Name = "btnPlayGame";
-            this.btnPlayGame.Size = new System.Drawing.Size(265, 188);
-            this.btnPlayGame.TabIndex = 1;
-            this.btnPlayGame.Text = "PLAY";
-            this.btnPlayGame.UseVisualStyleBackColor = true;
-            this.btnPlayGame.Click += (s, e) => PlayGameButtonClicked?.Invoke(this, EventArgs.Empty);
-            // 
-            // btnDeleteDeck
-            // 
-            this.btnDeleteDeck.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnDeleteDeck.Location = new System.Drawing.Point(3, 3);
-            this.btnDeleteDeck.Name = "btnDeleteDeck";
-            this.btnDeleteDeck.Size = new System.Drawing.Size(265, 188);
-            this.btnDeleteDeck.TabIndex = 0;
-            this.btnDeleteDeck.Text = "DEL";
-            this.btnDeleteDeck.UseVisualStyleBackColor = true;
-            this.btnDeleteDeck.Click += (s, e) => DeleteButtonClicked(this, EventArgs.Empty);
-            // 
-            // tlpLabelsContainer
-            // 
-            this.tlpLabelsContainer.ColumnCount = 1;
-            this.tlpLabelsContainer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpLabelsContainer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpLabelsContainer.Controls.Add(this.labelNumOfCardsInDeck, 0, 0);
-            this.tlpLabelsContainer.Controls.Add(this.labelDeckName, 0, 0);
-            this.tlpLabelsContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpLabelsContainer.Location = new System.Drawing.Point(3, 3);
-            this.tlpLabelsContainer.Name = "tlpLabelsContainer";
-            this.tlpLabelsContainer.RowCount = 2;
-            this.tlpLabelsContainer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpLabelsContainer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpLabelsContainer.Size = new System.Drawing.Size(813, 194);
-            this.tlpLabelsContainer.TabIndex = 1;
+            this.panelMainLayout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelMainLayout.Controls.Add(this.labelNumOfCardsInDeck);
+            this.panelMainLayout.Controls.Add(this.labelDeckName);
+            this.panelMainLayout.Controls.Add(this.btnDeleteDeck);
+            this.panelMainLayout.Controls.Add(this.btnPlayGame);
+            this.panelMainLayout.Controls.Add(this.btnEditDeck);
+            this.panelMainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMainLayout.Location = new System.Drawing.Point(0, 0);
+            this.panelMainLayout.Name = "panelMainLayout";
+            this.panelMainLayout.Size = new System.Drawing.Size(310, 171);
+            this.panelMainLayout.TabIndex = 0;
+            this.panelMainLayout.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMainLayout_Paint);
             // 
             // labelNumOfCardsInDeck
             // 
-            this.labelNumOfCardsInDeck.AutoSize = true;
-            this.labelNumOfCardsInDeck.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelNumOfCardsInDeck.Location = new System.Drawing.Point(3, 97);
+            this.labelNumOfCardsInDeck.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelNumOfCardsInDeck.Location = new System.Drawing.Point(0, 22);
             this.labelNumOfCardsInDeck.Name = "labelNumOfCardsInDeck";
-            this.labelNumOfCardsInDeck.Size = new System.Drawing.Size(807, 97);
-            this.labelNumOfCardsInDeck.TabIndex = 1;
-            this.labelNumOfCardsInDeck.Text = $"{NumOfCards} cards";
-            this.labelNumOfCardsInDeck.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelNumOfCardsInDeck.Size = new System.Drawing.Size(310, 19);
+            this.labelNumOfCardsInDeck.TabIndex = 4;
+            this.labelNumOfCardsInDeck.Text = "here";
+            this.labelNumOfCardsInDeck.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // labelDeckName
             // 
-            this.labelDeckName.AutoSize = true;
-            this.labelDeckName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelDeckName.Location = new System.Drawing.Point(3, 0);
+            this.labelDeckName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelDeckName.Location = new System.Drawing.Point(0, 0);
             this.labelDeckName.Name = "labelDeckName";
-            this.labelDeckName.Size = new System.Drawing.Size(807, 97);
-            this.labelDeckName.TabIndex = 0;
-            this.labelDeckName.Text = $"{DeckName}";
-            this.labelDeckName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelDeckName.Size = new System.Drawing.Size(310, 22);
+            this.labelDeckName.TabIndex = 3;
+            this.labelDeckName.Text = "here";
+            this.labelDeckName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // btnDeleteDeck
+            // 
+            this.btnDeleteDeck.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnDeleteDeck.Location = new System.Drawing.Point(0, 57);
+            this.btnDeleteDeck.Margin = new System.Windows.Forms.Padding(0);
+            this.btnDeleteDeck.Name = "btnDeleteDeck";
+            this.btnDeleteDeck.Size = new System.Drawing.Size(310, 37);
+            this.btnDeleteDeck.TabIndex = 2;
+            this.btnDeleteDeck.Text = "Delete";
+            this.btnDeleteDeck.UseVisualStyleBackColor = true;
+            // 
+            // btnPlayGame
+            // 
+            this.btnPlayGame.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnPlayGame.Location = new System.Drawing.Point(0, 94);
+            this.btnPlayGame.Margin = new System.Windows.Forms.Padding(0);
+            this.btnPlayGame.Name = "btnPlayGame";
+            this.btnPlayGame.Size = new System.Drawing.Size(310, 38);
+            this.btnPlayGame.TabIndex = 1;
+            this.btnPlayGame.Text = "Play";
+            this.btnPlayGame.UseVisualStyleBackColor = true;
+            // 
+            // btnEditDeck
+            // 
+            this.btnEditDeck.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnEditDeck.Location = new System.Drawing.Point(0, 132);
+            this.btnEditDeck.Margin = new System.Windows.Forms.Padding(0);
+            this.btnEditDeck.Name = "btnEditDeck";
+            this.btnEditDeck.Size = new System.Drawing.Size(310, 39);
+            this.btnEditDeck.TabIndex = 0;
+            this.btnEditDeck.Text = "Edit";
+            this.btnEditDeck.UseVisualStyleBackColor = true;
             // 
             // DeckControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tlpMainLayout);
+            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.panelMainLayout);
             this.DoubleBuffered = true;
             this.Name = "DeckControl";
-            this.Size = new System.Drawing.Size(819, 400);
-            this.tlpMainLayout.ResumeLayout(false);
-            this.tlpButtonContainer.ResumeLayout(false);
-            this.tlpLabelsContainer.ResumeLayout(false);
-            this.tlpLabelsContainer.PerformLayout();
+            this.Size = new System.Drawing.Size(310, 171);
+            this.panelMainLayout.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private TableLayoutPanel tlpMainLayout;
-        private TableLayoutPanel tlpButtonContainer;
-        private Button btnEditDeck;
-        private Button btnPlayGame;
+        private Panel panelMainLayout;
         private Button btnDeleteDeck;
-        private TableLayoutPanel tlpLabelsContainer;
+        private Button btnPlayGame;
+        private Button btnEditDeck;
         private Label labelNumOfCardsInDeck;
         private Label labelDeckName;
     }

@@ -2,20 +2,19 @@
 using src.Views;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace src.Presenters
 {
-    class ExcelPresenter<TView> : IPresenter<TView> where TView : IExportDecksView
+    class ExportDecksPresenter<TView> : IPresenter<TView> where TView : IExportDecksView
     {
-        private readonly IDeckService _deckService;
         private readonly IExcelService _excelService;
 
-        public ExcelPresenter(IDeckService deckService, IExcelService excelService)
+        public ExportDecksPresenter(IExcelService excelService)
         {
-            _deckService = deckService;
             _excelService = excelService;
         }
 
@@ -37,8 +36,15 @@ namespace src.Presenters
             else
             {
                 var file = await _excelService.CreateExcelFile(View.FileLocation, View.FileName);
-                _excelService.OpenExcelFile(file);
-                View.Close();
+                try
+                {
+                    _excelService.OpenExcelFile(file);
+                    View.Close();
+                }
+                catch (FileNotFoundException)
+                {
+                    View.Close();
+                }
             }
         }
 
@@ -60,12 +66,11 @@ namespace src.Presenters
         private string GetDirectoryFromUser()
         {
             var directory = "";
-            using (var dialog = new FolderBrowser())
+            using (var dialog = new FolderBrowserDialog())
             {
-                var result = dialog.ShowDialog();
-                if (result == DialogResult.OK)
+                if (dialog.ShowDialog()== DialogResult.OK)
                 {
-                    directory = dialog.Browser.SelectedPath;
+                    directory = dialog.SelectedPath;
                 }
             }
             return directory;

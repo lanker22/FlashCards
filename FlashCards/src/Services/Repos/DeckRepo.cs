@@ -92,10 +92,8 @@ namespace src.Services.Repos
         /// <param name="deckId">Primary key of the deck to be removed</param>
         public void DeleteDeckFromDatabase(int deckId)
         {
-            var queryString = "DELETE * FROM decks " +
-                              "WHERE decks.DeckID = @deckID " +
-                              "REFERENCES cards.DeckID "+
-                              "ON DELETE CASCADE";
+            var queryString = "DELETE FROM decks " +
+                              "WHERE decks.DeckID = @deckID";
 
             using(var connection = new SqlConnection(_connectionString))
             {

@@ -39,6 +39,7 @@ namespace src
                     services.AddTransient<IPresenter<FlashCardGameView>, FlashCardGamePresenter<FlashCardGameView>>();
                     services.AddTransient<IPresenter<AddDeckView>, AddDeckPresenter<AddDeckView>>();
                     services.AddTransient<IPresenter<EditDeckView>, EditDeckPresenter<EditDeckView>>();
+                    services.AddTransient<IPresenter<ExportDecksView>, ExportDecksPresenter<ExportDecksView>>();
                     services.AddTransient<IDeckService, DeckService>();
                     services.AddTransient<ICardService, CardService>();
                     services.AddSingleton<IFormOpener, FormOpener>();

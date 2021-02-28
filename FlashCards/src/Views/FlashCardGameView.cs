@@ -13,6 +13,9 @@ namespace src.Views
         public FlashCardGameView()
         {
             InitializeComponent();
+            btnNextItem.Click += BtnNextItem_Click;
+            btnPlayAgain.Click += BtnPlayAgain_Click;
+            textboxQuestionOrAnswer.BackColor = Color.LightGoldenrodYellow;
         }
 
         public void WireUpView()
@@ -33,8 +36,8 @@ namespace src.Views
         public bool IsAnswerShowing { get; set; }
         public string QuestionOrAnswerDisplay
         {
-            get { return textQuestionOrAnswer.Text; }
-            set { textQuestionOrAnswer.Text = value; }
+            get { return textboxQuestionOrAnswer.Text; }
+            set { textboxQuestionOrAnswer.Text = value; }
         }
 
         public bool LabelGameFinishedIsVisible
@@ -69,5 +72,15 @@ namespace src.Views
 
         public event EventHandler PlayAgainButtonClicked;
         public event EventHandler NextItemButtonClicked;
+
+        private void BtnPlayAgain_Click(object sender, EventArgs e)
+        {
+            PlayAgainButtonClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void BtnNextItem_Click(object sender, EventArgs e)
+        {
+            NextItemButtonClicked?.Invoke(sender, EventArgs.Empty);
+        }
     }
 }
