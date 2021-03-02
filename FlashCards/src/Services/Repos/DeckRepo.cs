@@ -1,8 +1,11 @@
-﻿using src.Models;
+﻿using Microsoft.Data.Sqlite;
+using src.Factories;
+using src.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -13,13 +16,13 @@ namespace src.Services.Repos
     /// </summary>
     public class DeckRepo : IDeckRepo
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["FlashCardsDatabase"].ConnectionString;
-
         private readonly IRepoHelper _helper;
+        private readonly IDbFactory _dbFactory;
 
-        public DeckRepo(IRepoHelper helper)
+        public DeckRepo(IRepoHelper helper, IDbFactory dbFactory)
         {
             _helper = helper;
+            _dbFactory = dbFactory;
         }
 
         /// <returns>A List of all the current decks of cards in the database</returns>
@@ -30,10 +33,9 @@ namespace src.Services.Repos
                               "LEFT JOIN cards " +
                               "ON decks.DeckID = cards.DeckID";
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = _dbFactory.CreateConnection())
             {
-                connection.Open();
-                using (var command = new SqlCommand(queryString, connection))
+                using (var command = _dbFactory.CreateCommand(queryString, connection))
                 {
                     var reader = command.ExecuteReader();
                     var decks = _helper.GenerateListOfAllDecksFromReader(reader);
@@ -52,12 +54,12 @@ namespace src.Services.Repos
                               "ON decks.DeckID = cards.DeckID " +
                               "WHERE decks.DeckID = @deckId";
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = _dbFactory.CreateConnection())
             {
                 connection.Open();
-                using (var command = new SqlCommand(queryString, connection))
+                using (var command = _dbFactory.CreateCommand(queryString, connection))
                 {
-                    command.Parameters.AddWithValue("@deckId", deckId);
+                    _helper.AddParameterToCommand("@deckId", deckId, command);
                     var reader = command.ExecuteReader();
                     var deck = _helper.GeneratePopulatedDeckFromReader(reader);
                     reader.Close();
@@ -75,12 +77,11 @@ namespace src.Services.Repos
             var queryString = "INSERT INTO decks (Name)" +
                               "VALUES (@deckName)";
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = _dbFactory.CreateConnection())
             {
-                connection.Open();
-                using (var command = new SqlCommand(queryString, connection))
+                using (var command = _dbFactory.CreateCommand(queryString, connection))
                 {
-                    command.Parameters.AddWithValue("@deckName", name);
+                    _helper.AddParameterToCommand("@deckName", name, command);
                     command.ExecuteNonQuery();
                 }
             }
@@ -95,12 +96,11 @@ namespace src.Services.Repos
             var queryString = "DELETE FROM decks " +
                               "WHERE decks.DeckID = @deckID";
 
-            using(var connection = new SqlConnection(_connectionString))
+            using(var connection = _dbFactory.CreateConnection())
             {
-                connection.Open();
-                using(var command = new SqlCommand(queryString, connection))
+                using (var command = _dbFactory.CreateCommand(queryString, connection))
                 {
-                    command.Parameters.AddWithValue("@deckID", deckId);
+                    _helper.AddParameterToCommand("@deckID", deckId, command);
                     command.ExecuteNonQuery();
                 }
             }
@@ -112,13 +112,12 @@ namespace src.Services.Repos
                               "SET name = @Name " + 
                               "WHERE decks.DeckID = @deckID";
 
-            using(var connection = new SqlConnection(_connectionString))
+            using(var connection = _dbFactory.CreateConnection())
             {
-                connection.Open();
-                using(var command = new SqlCommand(queryString, connection))
+                using (var command = _dbFactory.CreateCommand(queryString, connection))
                 {
-                    command.Parameters.AddWithValue("@Name", newDeckName);
-                    command.Parameters.AddWithValue("@deckID", deckId);
+                    _helper.AddParameterToCommand("@Name", newDeckName, command);
+                    _helper.AddParameterToCommand("@deckID", deckId, command);
                     command.ExecuteNonQuery();
                 }
             }
@@ -130,12 +129,11 @@ namespace src.Services.Repos
                               "FROM decks " +
                               "WHERE decks.DeckID = @deckId";
 
-            using(var connection = new SqlConnection(_connectionString))
+            using(var connection = _dbFactory.CreateConnection())
             {
-                connection.Open();
-                using(var command = new SqlCommand(queryString, connection))
+                using(var command = _dbFactory.CreateCommand(queryString, connection))
                 {
-                    command.Parameters.AddWithValue("@deckId", deckId);
+                    _helper.AddParameterToCommand("@deckId", deckId, command);
                     return _helper.GetDeckNameFromReader(command.ExecuteReader());
                 }
             }

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prism.Events;
+using src.Factories;
 using src.Models;
 using src.Presenters;
 using src.Services;
@@ -45,6 +46,7 @@ namespace src
                     services.AddSingleton<IFormOpener, FormOpener>();
                     services.AddSingleton<IEventAggregator, EventAggregator>();
                     services.AddTransient<IExcelService, ExcelService>();
+                    services.AddTransient<IDbFactory>(s => new SqlFactory("lol"));
                 })
                 .Build();
 

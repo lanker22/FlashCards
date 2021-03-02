@@ -42,22 +42,17 @@ namespace src.Presenters
 
         private void View_NextItemButtonClicked(object sender, EventArgs e)
         {
-            if (View.IsAnswerShowing && !IsGameComplete())
+            if (View.IsAnswerShowing && !GameComplete())
             {
                 GetNextCard();
-                SetDisplay(_currentCard.Question);
-                SetNextItemButtonText("Reveal Answer");
-                View.IsAnswerShowing = false;
             }
-            else if (View.IsAnswerShowing && IsGameComplete())
+            else if (View.IsAnswerShowing && GameComplete())
             {
                 GameCompleted();       
             }
             else 
             {
-                SetDisplay(_currentCard.Answer);
-                SetNextItemButtonText("Next Question");
-                View.IsAnswerShowing = true;
+                DisplayAnswer();
             }
             UpdateProgress();
         }
@@ -83,10 +78,20 @@ namespace src.Presenters
             View.QuestionOrAnswerDisplay = questionOrAnswer;
         }
 
+        private void DisplayAnswer()
+        {
+            SetDisplay(_currentCard.Answer);
+            SetNextItemButtonText("Next Question");
+            View.IsAnswerShowing = true;
+        }
+
         private void GetNextCard()
         {
             View.CurrentCardIndex += 1;
             SetCurrentCard();
+            SetDisplay(_currentCard.Question);
+            SetNextItemButtonText("Reveal Answer");
+            View.IsAnswerShowing = false;
         }
 
         private void SetCurrentCard()
@@ -94,7 +99,7 @@ namespace src.Presenters
             _currentCard = _deck.Cards.ElementAt(View.CurrentCardIndex);
         }
 
-        private bool IsGameComplete()
+        private bool GameComplete()
         {
             if (View.CurrentCardIndex == _deck.Cards.Count-1)
             {

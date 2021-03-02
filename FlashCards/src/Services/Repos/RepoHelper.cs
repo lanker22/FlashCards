@@ -1,8 +1,10 @@
 ﻿using src.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using System.Diagnostics;
 using System.Text;
 
 #nullable enable    
@@ -16,7 +18,7 @@ namespace src.Services.Repos
     {
         /// <param name="reader">A SqlCeDataReader instance</param>
         /// <returns>A list of all the current Decks within the reader</returns>
-        public List<Deck> GenerateListOfAllDecksFromReader(SqlDataReader reader)
+        public List<Deck> GenerateListOfAllDecksFromReader(IDataReader reader)
         {
             using (reader)
             {
@@ -58,7 +60,7 @@ namespace src.Services.Repos
         /// </summary>
         /// <param name="reader">A SqlCeDataReader instance</param>
         /// <returns>A Deck object generated with data from reader</returns>
-        public Deck GeneratePopulatedDeckFromReader(SqlDataReader reader)
+        public Deck GeneratePopulatedDeckFromReader(IDataReader reader)
         {
             using (reader)
             {
@@ -82,7 +84,14 @@ namespace src.Services.Repos
             }
         }
 
-        private void TryAddCardToDeck(Deck deck, SqlDataReader reader)
+        public void AddParameterToCommand<T>(string paramName, T value, IDbCommand command)
+        {
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = paramName;
+            parameter.Value = value;
+        }
+
+        private void TryAddCardToDeck(Deck deck, IDataReader reader)
         {
             if (DeckContainsCards(reader))
             {
@@ -90,7 +99,7 @@ namespace src.Services.Repos
             }
         }
 
-        private string? GetCardQuestionFromReader(SqlDataReader reader)
+        private string? GetCardQuestionFromReader(IDataReader reader)
         {
             try
             {
@@ -102,7 +111,7 @@ namespace src.Services.Repos
             }
         }
 
-        private string? GetCardAnswerFromReader(SqlDataReader reader)
+        private string? GetCardAnswerFromReader(IDataReader reader)
         {
             try
             {
@@ -119,7 +128,7 @@ namespace src.Services.Repos
         /// </summary>
         /// <param name="reader">The current database reader row</param>
         /// <returns>A single Card object</returns>
-        private Card? GenerateCardFromReader(SqlDataReader reader)
+        private Card? GenerateCardFromReader(IDataReader reader)
         {
             return new Card
             {
@@ -128,7 +137,7 @@ namespace src.Services.Repos
             };
         }
 
-        public string GetDeckNameFromReader(SqlDataReader reader)
+        public string GetDeckNameFromReader(IDataReader reader)
         {
             var name = "";
             while (reader.Read())
@@ -138,7 +147,7 @@ namespace src.Services.Repos
             return name;
         }
 
-        private bool DeckContainsCards(SqlDataReader reader)
+        private bool DeckContainsCards(IDataReader reader)
         {
             if(GetCardAnswerFromReader(reader) == null || GetCardQuestionFromReader(reader) == null)
             {
@@ -152,13 +161,14 @@ namespace src.Services.Repos
         /// </summary>
         /// <param name="reader">The current database reader to populatea the new Deck with.</param>
         /// <returns>A single Card object</returns>
-        private Deck GenerateEmptyDeckFromReader(SqlDataReader reader)
+        private Deck GenerateEmptyDeckFromReader(IDataReader reader)
         {
+            Debug.WriteLine(reader.FieldCount);
             return new Deck
             {
                 Cards = new List<Card>(),
-                Id = reader.GetInt32(reader.GetOrdinal("DeckId")),
-                Name = reader.GetString(reader.GetOrdinal("Name"))
+                Name = reader.GetString(reader.GetOrdinal("Name")),
+                Id = reader.GetInt32(reader.GetOrdinal("DeckId"))
             };
         }
     }

@@ -7,8 +7,8 @@ namespace src.Services.Repos
     {
         void AddNewDeckToDatabase(string name);
         void DeleteDeckFromDatabase(int deckId);
-        List<Models.Deck> GetAllDecksFromDatabase();
-        Models.Deck GetDeck(int deckId);
+        List<Deck> GetAllDecksFromDatabase();
+        Deck GetDeck(int deckId);
         void ChangeDeckName(int deckId, string newDeckName);
         string GetDeckNameFromDatabase(int deckId);
     }
