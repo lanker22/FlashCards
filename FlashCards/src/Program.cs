@@ -9,6 +9,7 @@ using src.Services.Repos;
 using src.Views;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -46,7 +47,7 @@ namespace src
                     services.AddSingleton<IFormOpener, FormOpener>();
                     services.AddSingleton<IEventAggregator, EventAggregator>();
                     services.AddTransient<IExcelService, ExcelService>();
-                    services.AddTransient<IDbFactory>(s => new SqlFactory("lol"));
+                    services.AddTransient<IDbFactory>(s => new SqlFactory(ConfigurationManager.ConnectionStrings["FlashCardsDatabaseProduction"].ConnectionString));
                 })
                 .Build();
 

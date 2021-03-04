@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using src.Factories;
 using src.Models;
 using src.Services;
@@ -6,51 +7,80 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using Xunit;
+using Moq;
 
 namespace Test
 {
     public class DeckServiceTests
     {
-
         private readonly DeckService _sut;
-        private readonly DeckRepo _deckRepo;
-        private readonly RepoHelper _repoHelper;
-        private readonly SqLiteFactory _dbFac;
+        private readonly Mock<IDeckRepo> _deckRepoMock = new Mock<IDeckRepo>();
 
         public DeckServiceTests()
         {
-            _dbFac = new SqLiteFactory("DataSource=memory;");
-            _repoHelper = new RepoHelper();
-            _deckRepo = new DeckRepo(_repoHelper, _dbFac);
-            _sut = new DeckService(_deckRepo);
+            _sut = new DeckService(_deckRepoMock.Object);
         }
 
         [Fact]
-        public void GetAllDecks_ShouldReturnEveryDeckInDatabase()
+        public void GetAllDecks_ShouldReturnAllDecks()
         {
-            _dbFac.SetupSqliteDatabaseForTesting();
             // Arrange
             var firstDeck = new Deck
             {
-                Name = "test1",
-                Cards = new List<Card>(),
-                Id = 1
+                Name = "deck1",
             };
 
             var secondDeck = new Deck
             {
-                Name = "test2",
-                Cards = new List<Card>(),
-                Id = 2
+                Name = "deck2"
             };
 
-            var decksToReturn = new List<Deck> { firstDeck, secondDeck };
+            var expected = new List<Deck> { firstDeck, secondDeck };
+
+            _deckRepoMock.Setup(x => x.GetAllDecksFromDatabase())
+                .Returns(expected);
 
             // Act
-            var decks = _sut.GetAllDecks();
+            var actual = _sut.GetAllDecks();
 
             // Assert
-            Assert.Equal(decksToReturn, decks);
+            Assert.Equal(actual[0].Name, expected[0].Name);
+            Assert.Equal(actual[1].Name, expected[1].Name);
+        }
+
+        [Fact]
+        public void GetDeck_ShouldReturnSingleDeck()
+        {
+            // Arrange
+            var expected = new Deck
+            {
+                Name = "deck1",
+                Id = 1
+            };
+            _deckRepoMock.Setup(x => x.GetDeck(1))
+                .Returns(expected);
+
+            // Act
+            var actual = _sut.GetDeck(1);
+
+            // Assert
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Id, actual.Id);
+        }
+
+        [Fact]
+        public void GetDeckName_ShouldReturnSingleDeckName()
+        {
+            // Arrange
+            var expected = "testName";
+            _deckRepoMock.Setup(x => x.GetDeckNameFromDatabase(1))
+                .Returns(expected);
+
+            // Act
+            var actual = _sut.GetDeckName(1);
+
+            // Assert
+            Assert.Equal(expected, actual);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace src.Services
         /// <summary>
         ///     Retrieve all the current decks.
         /// </summary>
-        /// <returns>A List<Deck></returns>
+        /// <returns>List of all current decks in database.</returns>
         public List<Deck> GetAllDecks()
         {
             return _deckRepo.GetAllDecksFromDatabase();

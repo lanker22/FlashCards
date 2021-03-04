@@ -28,33 +28,5 @@ namespace src.Factories
             conn.Open();
             return conn;
         }
-
-        public void SetupSqliteDatabaseForTesting()
-        {
-            using(var conn = new SqliteConnection(_connectionString))
-            {
-                conn.Open();
-                using(var cmd = new SqliteCommand())
-                {
-                    cmd.Connection = conn;
-                    cmd.CommandText = "CREATE TABLE IF NOT EXISTS decks(DeckID INTEGER, " +
-                        "Name TEXT)";
-                    cmd.ExecuteNonQuery();
-
-                    cmd.CommandText = "CREATE TABLE IF NOT EXISTS cards(Question TEXT, " +
-                        "Answer TEXT, DeckID INTEGER," +
-                        "FOREIGN KEY (DeckID) REFERENCES decks(DeckID))";
-                    cmd.ExecuteNonQuery();
-
-                    cmd.CommandText = "INSERT INTO decks (DeckID, Name) " +
-                                      "VALUES ('1', 'test1')";
-                    cmd.ExecuteNonQuery();
-
-                    cmd.CommandText = "INSERT INTO decks (DeckID, Name) " +
-                                      "VALUES ('2', 'test2')";
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
     }
 }

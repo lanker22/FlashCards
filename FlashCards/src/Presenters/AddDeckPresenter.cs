@@ -28,6 +28,14 @@ namespace src.Presenters
             _eventAggregator = eventAggregator;
         }
 
+        /// <summary>
+        ///     Subscribes to the "deck added" event. Adds a new deck to
+        ///     the database with the given name, and resets the View values so
+        ///     that another Deck may be added afterwards. If no Deck Name is provided, 
+        ///     display a message to the User prompting them to include a Name. 
+        /// </summary>
+        /// <param name="sender">The AddDeckView instnace which published the event.</param>
+        /// <param name="e"></param>
         private void View_DeckAddedClicked(object sender, EventArgs e)
         {
             if(View.NewDeckName == "")
@@ -42,18 +50,29 @@ namespace src.Presenters
             }
         }
 
+        /// <summary>
+        ///     Resets the "Name" field of the View an empty string.
+        /// </summary>
         private void ResetViewValues()
         {
             View.NewDeckName = "";
         }
 
+        /// <summary>
+        ///     Register View events and ensure the Name field is empty, ready for User input. 
+        /// </summary>
         public void InitialSetup()
         {
             View.DeckAddedClicked += View_DeckAddedClicked;
             View.AddDeckViewClosedEvent += View_OnClosing;
-            View.NewDeckName = "";
+            ResetViewValues();
         }
 
+        /// <summary>
+        ///     Publishes an Event when the AddDeckView is closed.
+        /// </summary>
+        /// <param name="sender">AddDeckView which was closed to trigger the event.</param>
+        /// <param name="e"></param>
         private void View_OnClosing(object sender, EventArgs e)
         {
             _eventAggregator.GetEvent<AddDeckFormClosedEvent>().Publish("AddDeck form closed");

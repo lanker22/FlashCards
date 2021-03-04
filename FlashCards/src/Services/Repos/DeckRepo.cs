@@ -25,7 +25,10 @@ namespace src.Services.Repos
             _dbFactory = dbFactory;
         }
 
-        /// <returns>A List of all the current decks of cards in the database</returns>
+        /// <summary>
+        ///     Fetch all current decks in the database.
+        /// </summary>
+        /// <returns></returns>
         public List<Deck> GetAllDecksFromDatabase()
         {
             var queryString = "SELECT * " +
@@ -35,6 +38,7 @@ namespace src.Services.Repos
 
             using (var connection = _dbFactory.CreateConnection())
             {
+                connection.Open();
                 using (var command = _dbFactory.CreateCommand(queryString, connection))
                 {
                     var reader = command.ExecuteReader();
@@ -45,8 +49,11 @@ namespace src.Services.Repos
             }
         }
 
-        /// <param name="deckId">Primary key of the deck to search for in database</param>
-        /// <returns>Returns a single deck</returns>
+        /// <summary>
+        ///     Fetches a single Deck from the database.
+        /// </summary>
+        /// <param name="deckId">Primary key of the Deck to be retrieved.</param>
+        /// <returns>A single Deck object.</returns>
         public Deck GetDeck(int deckId)
         {
             var queryString = "SELECT * FROM decks " +
@@ -79,6 +86,7 @@ namespace src.Services.Repos
 
             using (var connection = _dbFactory.CreateConnection())
             {
+                connection.Open();
                 using (var command = _dbFactory.CreateCommand(queryString, connection))
                 {
                     _helper.AddParameterToCommand("@deckName", name, command);
@@ -98,6 +106,7 @@ namespace src.Services.Repos
 
             using(var connection = _dbFactory.CreateConnection())
             {
+                connection.Open();
                 using (var command = _dbFactory.CreateCommand(queryString, connection))
                 {
                     _helper.AddParameterToCommand("@deckID", deckId, command);
@@ -105,6 +114,12 @@ namespace src.Services.Repos
                 }
             }
         }
+
+        /// <summary>
+        ///     Alter the name of the specified Deck in the database.
+        /// </summary>
+        /// <param name="deckId">Primary key of the deck to update.</param>
+        /// <param name="newDeckName">New name of the deck.</param>
 
         public void ChangeDeckName(int deckId, string newDeckName)
         {
@@ -114,6 +129,7 @@ namespace src.Services.Repos
 
             using(var connection = _dbFactory.CreateConnection())
             {
+                connection.Open();
                 using (var command = _dbFactory.CreateCommand(queryString, connection))
                 {
                     _helper.AddParameterToCommand("@Name", newDeckName, command);
@@ -122,7 +138,11 @@ namespace src.Services.Repos
                 }
             }
         }
-
+        /// <summary>
+        ///     Get the name of a single Deck from the database.
+        /// </summary>
+        /// <param name="deckId">Primary key of the Deck to get name from.</param>
+        /// <returns><string>Name</string> of deck</returns>
         public string GetDeckNameFromDatabase(int deckId)
         {
             var queryString = "SELECT name " +
@@ -131,7 +151,8 @@ namespace src.Services.Repos
 
             using(var connection = _dbFactory.CreateConnection())
             {
-                using(var command = _dbFactory.CreateCommand(queryString, connection))
+                connection.Open();
+                using (var command = _dbFactory.CreateCommand(queryString, connection))
                 {
                     _helper.AddParameterToCommand("@deckId", deckId, command);
                     return _helper.GetDeckNameFromReader(command.ExecuteReader());

@@ -1,4 +1,5 @@
-﻿using src.Models;
+﻿using src.Factories;
+using src.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,13 +13,13 @@ namespace src.Services.Repos
     /// </summary>
     public class CardRepo : ICardRepo
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["FlashCardsDatabase"].ConnectionString;
-
+        private readonly IDbFactory _dbFactory;
         private readonly IRepoHelper _helper;
 
-        public CardRepo(IRepoHelper helper)
+        public CardRepo(IRepoHelper helper, IDbFactory dbFactory)
         {
             _helper = helper;
+            _dbFactory = dbFactory;
         }
 
         /// <summary>
@@ -31,17 +32,17 @@ namespace src.Services.Repos
             var queryString = "INSERT INTO cards (Question, Answer, DeckId)" +
                               "VALUES (@question, @answer, @deckId)";
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = _dbFactory.CreateConnection())
             {
                 connection.Open();
                 foreach (var card in cards)
                 {
-                    using (var command = new SqlCommand(queryString, connection))
+                    using (var command = _dbFactory.CreateCommand(queryString, connection))
                     {
                         {
-                            command.Parameters.AddWithValue("@question", card.Question);
-                            command.Parameters.AddWithValue("@answer", card.Answer);
-                            command.Parameters.AddWithValue("@deckId", deckId);
+                            _helper.AddParameterToCommand("@question", card.Question, command);
+                            _helper.AddParameterToCommand("@answer", card.Answer, command);
+                            _helper.AddParameterToCommand("@deckId", deckId, command);
 
                             command.ExecuteNonQuery();
                         }
@@ -60,14 +61,14 @@ namespace src.Services.Repos
             var queryString = "INSERT INTO cards " +
                               "VALUES (@question, @answer, @deckId)";
 
-            using(var connection = new SqlConnection(_connectionString))
+            using(var connection = _dbFactory.CreateConnection())
             {
                 connection.Open();
-                using(var command = new SqlCommand(queryString, connection))
+                using (var command = _dbFactory.CreateCommand(queryString, connection))
                 {
-                    command.Parameters.AddWithValue("@question", card.Question);
-                    command.Parameters.AddWithValue("@answer", card.Answer);
-                    command.Parameters.AddWithValue("@deckId", deckId);
+                    _helper.AddParameterToCommand("@question", card.Question, command);
+                    _helper.AddParameterToCommand("@answer", card.Answer, command);
+                    _helper.AddParameterToCommand("@deckId", deckId, command);
 
                     command.ExecuteNonQuery();
                 }
